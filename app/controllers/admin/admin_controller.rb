@@ -1,4 +1,6 @@
 class Admin::AdminController < ApplicationController
+  before_action :ensure_logged_in
+  
   layout 'admin'
 
   def ensure_logged_in
@@ -8,10 +10,10 @@ class Admin::AdminController < ApplicationController
     end
   end
 
-  # def ensure_admin
-  #   unless current_user.admin?
-  #     flash[:danger] = 'You can not access that page.'
-  #     redirect_to root_url
-  #   end
-  # end
+  def ensure_admin
+    unless current_user.admin?
+      flash[:danger] = 'You can not access that page.'
+      redirect_to root_url
+    end
+  end
 end

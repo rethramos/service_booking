@@ -1,6 +1,7 @@
 class Admin::SessionsController < Admin::AdminController
-  def new
-  end
+  skip_before_action :ensure_logged_in, only: %i[new create]
+
+  def new; end
 
   def create
     @user = User.find_by(email: params[:session][:email].downcase)
