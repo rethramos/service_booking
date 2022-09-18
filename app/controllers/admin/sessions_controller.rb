@@ -1,5 +1,6 @@
 class Admin::SessionsController < Admin::AdminController
   skip_before_action :ensure_logged_in, only: %i[new create]
+  skip_before_action :ensure_admin, only: %i[new create]
 
   def new; end
 

@@ -1,5 +1,6 @@
 class Admin::AdminController < ApplicationController
   before_action :ensure_logged_in
+  before_action :ensure_admin
   
   layout 'admin'
 
