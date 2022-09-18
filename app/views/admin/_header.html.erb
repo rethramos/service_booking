@@ -9,7 +9,7 @@
         <li class="nav-item">
           <%= link_to 'Home', admin_root_path, class: 'nav-link' %>
         </li>
-        <% if true %>
+        <% if logged_in? %>
           <li class="nav-item">
             <%= button_to 'Log out', admin_logout_path, method: :delete, class: 'nav-link btn btn-link' %>
           </li>
