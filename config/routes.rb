@@ -1,11 +1,5 @@
 Rails.application.routes.draw do
-  namespace :admin do
-    root 'static_pages#home'
-  end
-
-  devise_for :users, path: 'admin', controllers: {
-    sessions: 'admin/sessions'
-  }
+  devise_for :users, path: 'admin'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
