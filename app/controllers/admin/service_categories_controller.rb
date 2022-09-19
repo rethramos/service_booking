@@ -9,6 +9,7 @@ class Admin::ServiceCategoriesController < Admin::AdminController
     @service_category = @business.service_categories.build(
       service_category_params
     )
+    @service_category.image.attach(params[:service_category][:image])
     
     if @service_category.save
       flash[:success] = 'Successfully created a service category.'
@@ -37,6 +38,6 @@ class Admin::ServiceCategoriesController < Admin::AdminController
   end
 
   def service_category_params
-    params.require(:service_category).permit(:name, :description)
+    params.require(:service_category).permit(:name, :description, :image)
   end
 end

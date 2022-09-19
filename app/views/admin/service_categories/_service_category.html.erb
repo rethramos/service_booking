@@ -1,0 +1,15 @@
+<div class="card">
+  <% if service_category.image.attached? %>
+    <%= image_tag service_category.image.representation(
+      resize_to_limit: [500,500]),
+      alt: service_category.name,
+      class: 'card-img-top',
+      height: 200,
+      style: 'object-fit:cover;' %>
+  <% end %>
+  <div class="card-body">
+    <p class="card-title h5 text-truncate"><%= service_category.name %></p>
+    <p class="card-text text-truncate"><%= service_category.description %></p>
+    <%= link_to 'View services', '#', class: 'card-link' %>
+  </div>
+</div>
