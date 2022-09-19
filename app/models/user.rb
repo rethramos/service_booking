@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
 
+  has_many :businesses
+
   before_save :downcase_email
 
   validates :first_name, presence: true, length: { maximum: 50 }
