@@ -1,14 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# one:
-#   addressable: one
-#   addressable_type: Addressable
-#   line_one: MyString
-#   line_two: MyString
-#   city: MyString
-#   province: MyString
-#   country: MyString
-#   postal_code: MyString
+one:
+  addressable: one (Business)
+  line_one: 'Blk 1 Lot 2, My Village'
+  line_two: 'Brgy. Rose'
+  city: Biñan
+  province: Laguna
+  country: Philippines
+  postal_code: 4024
 
 # two:
 #   addressable: two
