@@ -17,7 +17,7 @@ class ServicesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create service" do
     assert_difference("Service.count") do
-      post services_url, params: { service: { business_id: @service.business_id, description: @service.description, name: @service.name, service_category_id: @service.service_category_id, unit_price: @service.unit_price } }
+      post services_url, params: { service: { business_id: @service.business_id, description: @service.description, name: 'Another Service', service_category_id: @service.service_category_id, unit_price: @service.unit_price } }
     end
 
     assert_redirected_to service_url(Service.last)

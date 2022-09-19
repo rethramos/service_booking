@@ -4,7 +4,8 @@ class Service < ApplicationRecord
 
   before_validation :upcase_currency
 
-  validates :name, presence: true, length: { maximum: 100 }
+  validates :name, presence: true, length: { maximum: 100 },
+                   uniqueness: { scope: :business_id }
   validates :description, presence: true, length: { maximum: 500 }
   validates :unit_price, presence: true,
                          numericality: { greater_than_or_equal_to: 0.00 }

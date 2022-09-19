@@ -18,6 +18,16 @@ class ServiceTest < ActiveSupport::TestCase
     assert_not @service.valid?
   end
 
+  test 'name should be unique per business' do
+    copy = @service.dup
+    @service.save
+    assert_not copy.valid?
+
+    copy.business = businesses(:two)
+    assert copy.valid?
+    
+  end
+
   test "name should be at most 100 characters" do
     @service.name = 'a' * 101
     assert_not @service.valid?
