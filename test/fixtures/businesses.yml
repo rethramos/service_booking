@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# one:
-#   user: one
-#   name: MyString
-#   timezone: MyString
+one:
+  user: john
+  name: 'My Business'
+  timezone: Asia/Manila
 
-# two:
-#   user: two
-#   name: MyString
-#   timezone: MyString
+two:
+  user: john
+  name: 'Business 2'
+  timezone: UTC
