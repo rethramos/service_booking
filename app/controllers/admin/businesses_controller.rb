@@ -5,5 +5,6 @@ class Admin::BusinessesController < Admin::AdminController
 
   def show
     @business = Business.find params[:id]
+    @service_categories = @business.service_categories
   end
 end
