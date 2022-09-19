@@ -38,10 +38,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_19_040812) do
   end
 
   create_table "service_categories", force: :cascade do |t|
+    t.bigint "business_id", null: false
     t.string "name", null: false
     t.text "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["business_id"], name: "index_service_categories_on_business_id"
   end
 
   create_table "users", force: :cascade do |t|
