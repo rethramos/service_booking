@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_19_072130) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_19_092353) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -74,6 +74,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_19_072130) do
     t.index ["business_id"], name: "index_service_categories_on_business_id"
   end
 
+  create_table "services", force: :cascade do |t|
+    t.bigint "business_id", null: false
+    t.bigint "service_category_id"
+    t.string "name", null: false
+    t.text "description", null: false
+    t.decimal "unit_price", precision: 10, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["business_id"], name: "index_services_on_business_id"
+    t.index ["service_category_id"], name: "index_services_on_service_category_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
@@ -89,4 +101,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_19_072130) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "businesses", "users"
+  add_foreign_key "services", "businesses"
+  add_foreign_key "services", "service_categories"
 end

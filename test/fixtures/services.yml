@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  business: one
+  service_category: one
+  name: MyString
+  description: MyText
+  unit_price: 9.99
+
+two:
+  business: two
+  service_category: two
+  name: MyString
+  description: MyText
+  unit_price: 9.99
