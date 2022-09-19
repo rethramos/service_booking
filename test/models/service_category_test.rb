@@ -2,7 +2,7 @@ require "test_helper"
 
 class ServiceCategoryTest < ActiveSupport::TestCase
   def setup
-    @service_category = ServiceCategory.new(
+    @service_category = businesses(:one).service_categories.build(
       name: 'Hair',
       description: 'Hair services'
     )
