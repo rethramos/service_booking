@@ -1,12 +1,18 @@
 class Admin::ServiceCategoriesController < Admin::AdminController
   def new
-    @service_category = ServiceCategory.new
+    set_business
+    @service_category = @business.service_categories.build
   end
 
   def create
-    @service_category = ServiceCategory.new(service_category_params)
-    if @service_category.valid?
-
+    set_business
+    @service_category = @business.service_categories.build(
+      service_category_params
+    )
+    
+    if @service_category.save
+      flash[:success] = 'Successfully created a service category.'
+      redirect_to admin_business_url(@business)
     else
       render :new, status: :unprocessable_entity
     end
@@ -25,6 +31,10 @@ class Admin::ServiceCategoriesController < Admin::AdminController
   end
 
   private
+
+  def set_business
+    @business = Business.find(params[:id])
+  end
 
   def service_category_params
     params.require(:service_category).permit(:name, :description)

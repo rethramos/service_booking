@@ -2,12 +2,12 @@ require "test_helper"
 
 class Admin::ServiceCategoriesControllerTest < ActionDispatch::IntegrationTest
   test "should get new" do
-    get new_admin_service_category_path
+    get new_admin_service_category_path(businesses(:one))
     assert_redirected_to admin_login_url
   end
 
   test "should get create" do
-    post admin_service_categories_path
+    post admin_service_categories_path(businesses(:one))
     assert_redirected_to admin_login_url
   end
 

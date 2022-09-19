@@ -9,10 +9,13 @@ Rails.application.routes.draw do
     get 'login', to: 'sessions#new'
     post 'login', to: 'sessions#create'
     delete 'logout', to: 'sessions#destroy'
-    resources :service_categories, only: [:new, :create]
-    resources :businesses, only: [:index, :show]
+    resources :businesses, only: %i[index show] do
+      member do
+        resources :service_categories, only: %i[new create]
+      end
+    end
   end
 
   # Defines the root path route ("/")
-  root "application#hello"
+  root 'application#hello'
 end
