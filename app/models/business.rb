@@ -2,6 +2,7 @@ class Business < ApplicationRecord
   belongs_to :user
   has_one :address, as: :addressable, dependent: :destroy
   has_many :service_categories, dependent: :destroy
+  has_many :services, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 100 }
   validates :timezone, presence: true

@@ -80,8 +80,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_19_092353) do
     t.string "name", null: false
     t.text "description", null: false
     t.decimal "unit_price", precision: 10, scale: 2, null: false
+    t.string "currency", default: "PHP", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["business_id", "name"], name: "index_services_on_business_id_and_name", unique: true
     t.index ["business_id"], name: "index_services_on_business_id"
     t.index ["service_category_id"], name: "index_services_on_service_category_id"
   end

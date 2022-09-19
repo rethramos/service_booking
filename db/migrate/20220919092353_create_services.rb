@@ -6,8 +6,11 @@ class CreateServices < ActiveRecord::Migration[7.0]
       t.string :name, null: false
       t.text :description, null: false
       t.decimal :unit_price, null: false, precision: 10, scale: 2
+      t.string :currency, null: false, default: 'PHP'
 
       t.timestamps
     end
+
+    add_index :services, [:business_id, :name], unique: true
   end
 end
