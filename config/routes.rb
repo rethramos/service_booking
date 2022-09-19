@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     post 'login', to: 'sessions#create'
     delete 'logout', to: 'sessions#destroy'
     resources :service_categories, only: [:new, :create]
+    resources :businesses, only: [:index, :show]
   end
 
   # Defines the root path route ("/")
