@@ -1,0 +1,2 @@
+one_blob: <%= ActiveStorage::FixtureSet.blob filename: "kitten.jpg",
+  service_name: 'test' %>

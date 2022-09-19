@@ -1,0 +1,4 @@
+one:
+  name: image
+  record: one (ServiceCategory)
+  blob: one_blob

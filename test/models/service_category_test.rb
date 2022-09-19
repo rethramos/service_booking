@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class ServiceCategoryTest < ActiveSupport::TestCase
   def setup
@@ -6,9 +6,17 @@ class ServiceCategoryTest < ActiveSupport::TestCase
       name: 'Hair',
       description: 'Hair services'
     )
+    filename = 'kitten.jpg'
+    @service_category.image.attach(
+      io: File.open(
+        Rails.root.join('test', 'fixtures', 'files', filename)
+      ),
+      filename:,
+      content_type: 'image/jpeg'
+    )
   end
 
-  test "should be valid" do
+  test 'should be valid' do
     assert @service_category.valid?
   end
 
