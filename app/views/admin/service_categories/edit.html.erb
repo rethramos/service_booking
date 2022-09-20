@@ -1,2 +1,4 @@
-<h1>Admin::ServiceCategories#edit</h1>
-<p>Find me in app/views/admin/service_categories/edit.html.erb</p>
+<h1>Editing service category</h1>
+<p>for <strong><%= @business.name %></strong></p>
+<%= render 'form', service_category: @service_category,
+  url: admin_service_category_path(@service_category) %>

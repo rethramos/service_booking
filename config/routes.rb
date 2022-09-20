@@ -11,10 +11,9 @@ Rails.application.routes.draw do
     delete 'logout', to: 'sessions#destroy'
     resources :businesses, only: %i[index show] do
       resources :services
-      member do
-        resources :service_categories, only: %i[new create]
-      end
+      resources :service_categories, only: %i[new create]
     end
+    resources :service_categories, only: %i[edit update destroy]
     resources :appointments, only: %i[new create edit update destroy]
   end
 
