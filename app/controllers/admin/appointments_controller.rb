@@ -1,6 +1,6 @@
 class Admin::AppointmentsController < Admin::AdminController
   before_action :set_service
-  around_action :set_time_zone, only: [:create, :edit, :update]
+  around_action :set_time_zone, only: %i[create edit update]
 
   def new
     @appointment = @service.appointments.build
@@ -31,6 +31,16 @@ class Admin::AppointmentsController < Admin::AdminController
     end
   end
 
+  def destroy
+    Appointment.find(params[:id]).destroy
+
+    respond_to do |format|
+      flash[:success] = 'Appointment was successfully destroyed.'
+      format.html { redirect_to admin_business_service_url(@service.business_id, @service) }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   def set_service
@@ -44,7 +54,7 @@ class Admin::AppointmentsController < Admin::AdminController
     params.require(:appointment).permit(:service_id, :timeslot, :max_slots)
   end
 
-  def set_time_zone
-    Time.use_zone(@service.business.timezone) { yield }
+  def set_time_zone(&block)
+    Time.use_zone(@service.business.timezone, &block)
   end
 end
