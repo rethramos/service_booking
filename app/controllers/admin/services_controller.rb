@@ -1,7 +1,7 @@
 class Admin::ServicesController < Admin::AdminController
   before_action :set_service, only: %i[ show edit update destroy ]
   before_action :set_business
-  before_action :set_categories, only: [:new, :create]
+  before_action :set_categories, only: [:new, :create, :edit, :update]
 
   # GET /admin/businesses/1/services or /admin/businesses/1/services.json
   def index
@@ -27,7 +27,8 @@ class Admin::ServicesController < Admin::AdminController
 
     respond_to do |format|
       if @service.save
-        format.html { redirect_to admin_business_service_url(@business, @service), success: "Service was successfully created." }
+        flash[:success] = "Service was successfully created."
+        format.html { redirect_to admin_business_service_url(@business, @service) }
         format.json { render :show, status: :created, location: @service }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -40,7 +41,11 @@ class Admin::ServicesController < Admin::AdminController
   def update
     respond_to do |format|
       if @service.update(service_params)
-        format.html { redirect_to admin_business_service_url(@business, @service), success: "Service was successfully updated." }
+        if service_params[:image].present?
+          @service.image.attach(service_params[:image])
+        end
+        flash[:success] = "Service was successfully updated."
+        format.html { redirect_to admin_business_service_url(@business, @service) }
         format.json { render :show, status: :ok, location: @service }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -54,7 +59,8 @@ class Admin::ServicesController < Admin::AdminController
     @service.destroy
 
     respond_to do |format|
-      format.html { redirect_to admin_business_services_url(@business), success: "Service was successfully destroyed." }
+      flash[:success] = "Service was successfully destroyed."
+      format.html { redirect_to admin_business_services_url(@business) }
       format.json { head :no_content }
     end
   end

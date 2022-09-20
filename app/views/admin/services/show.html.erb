@@ -1,12 +1,9 @@
 <h1><%= @service.name %></h1>
-<%= render @service %>
-<br>
-<div>
-  <p>
-    <%= link_to "Edit this service", edit_admin_business_service_path(@business, @service) %> |
-    <%= link_to "Back to services", admin_business_services_path(@business) %>
-  </p>
-  <%= button_to "Destroy this service",
+<p>
+  <%= link_to "Edit this service", edit_admin_business_service_path(@business, @service) %> |
+  <%= link_to "Back to services", admin_business_services_path(@business) %>
+</p>
+<%= button_to "Destroy this service",
   admin_business_service_path(@business, @service),
   form: { 
     data: {
@@ -14,4 +11,9 @@
     }
   },
   method: :delete, class: 'btn btn-danger' %>
-</div>
+<br>
+<%= render @service %>
+<br>
+<h2>Appointments</h2>
+<%= link_to 'New appointment', '#' %>
+<table class="table"></table>
