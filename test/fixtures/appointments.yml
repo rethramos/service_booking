@@ -2,10 +2,10 @@
 
 one:
   service: one
-  timeslot: 2022-09-20 14:55:32
+  timeslot: <%= 2.weeks.from_now %>
   max_slots: 1
 
 two:
   service: two
-  timeslot: 2022-09-20 14:55:32
+  timeslot: <%= 2.weeks.from_now %>
   max_slots: 1
