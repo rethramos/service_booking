@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         resources :service_categories, only: %i[new create]
       end
     end
+    resources :appointments, only: %i[new create]
   end
 
   # Defines the root path route ("/")

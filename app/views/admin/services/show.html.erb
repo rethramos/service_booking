@@ -15,5 +15,5 @@
 <%= render @service %>
 <br>
 <h2>Appointments</h2>
-<%= link_to 'New appointment', '#' %>
+<%= link_to 'New appointment', new_admin_appointment_path(service_id: @service.id) %>
 <table class="table"></table>

@@ -6,7 +6,7 @@ class Appointment < ApplicationRecord
   validate :future_timeslot, unless: proc { |a| a.timeslot.blank? }
 
   def future_timeslot
-    if timeslot < 2.days.from_now
+    if timeslot < 3.days.from_now
       message = 'must be at least 3 days from now'
       errors.add :timeslot, message
     end

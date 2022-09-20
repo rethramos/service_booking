@@ -3,7 +3,7 @@ require 'test_helper'
 class AppointmentTest < ActiveSupport::TestCase
   def setup
     @appointment = services(:one).appointments.build(
-      timeslot: 3.days.from_now,
+      timeslot: 3.days.from_now + 1.second,
       max_slots: 1
     )
   end
