@@ -1,0 +1,35 @@
+<div id="<%= dom_id service %>" class="card">
+  <div class="card-body">
+    <p>
+      <strong>Business:</strong>
+      <%= "#{service.business.name} (##{service.business_id})" %>
+    </p>
+    <p>
+      <strong>Service category:</strong>
+      <%= "#{service.service_category.name} (##{service.service_category_id})" %>
+    </p>
+    <p>
+      <strong>Name:</strong>
+      <%= service.name %>
+    </p>
+    <p>
+      <strong>Description:</strong>
+      <%= service.description %>
+    </p>
+    <p>
+      <strong>Unit price:</strong>
+      <%= "#{service.currency} #{service.unit_price}" %>
+    </p>
+    <% if service.image.attached? %>
+      <p>
+        <strong>Image: </strong>
+      </p>
+      <%= image_tag service.image.representation(
+      resize_to_limit: [128,128]),
+      alt: service.name,
+      style: 'object-fit:cover;height:128px;width:128px;' %>
+    <% end %>
+    <br>
+    <%= link_to "View details", admin_business_service_path(@business, service) %>
+  </div>
+</div>

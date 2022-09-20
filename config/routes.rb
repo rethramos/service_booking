@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     post 'login', to: 'sessions#create'
     delete 'logout', to: 'sessions#destroy'
     resources :businesses, only: %i[index show] do
+      resources :services
       member do
         resources :service_categories, only: %i[new create]
       end

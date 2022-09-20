@@ -1,4 +1,5 @@
 class ServiceCategory < ApplicationRecord
+  has_many :services, dependent: :nullify
   belongs_to :business
   has_one_attached :image
 
