@@ -6,7 +6,11 @@
     </p>
     <p>
       <strong>Service category:</strong>
-      <%= "#{service.service_category.name} (##{service.service_category_id})" %>
+      <% if service.service_category.present? %>
+        <%= "#{service.service_category.name} (##{service.service_category_id})" %>
+      <% else %>
+        Uncategorized
+      <% end %>
     </p>
     <p>
       <strong>Name:</strong>
