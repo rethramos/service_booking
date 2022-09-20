@@ -1,9 +1,3 @@
 <h1>Services</h1>
 <%= link_to "New service", new_admin_business_service_path(@business) %>
-<div id="services" class="mt-4">
-  <% @services.each do |service| %>
-    <%= render service %>
-    <p>
-    </p>
-  <% end %>
-</div>
+<%= render 'service_list', services: @services %>

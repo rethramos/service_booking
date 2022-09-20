@@ -9,5 +9,7 @@
   <% end %>
 </ul>
 <br>
-<h2>Services ()</h2>
-<%= link_to 'New Service', new_admin_business_service_path(@business) %>
+<h2>Services (<%= @services.count %>)</h2>
+<%= link_to 'New Service', new_admin_business_service_path(@business) %> |
+<%= link_to 'View all', admin_business_services_path(@business) %>
+<%= render 'admin/services/service_list', services: @services %>
