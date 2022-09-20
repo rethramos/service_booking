@@ -16,4 +16,26 @@
 <br>
 <h2>Appointments</h2>
 <%= link_to 'New appointment', new_admin_appointment_path(service_id: @service.id) %>
-<table class="table"></table>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Timeslot</th>
+      <th>Max slots</th>
+      <th>Created at</th>
+      <th>Updated at</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @appointments.each do |appointment| %>
+      <tr>
+        <th><%= appointment.id %></th>
+        <td><%= appointment.timeslot %></td>
+        <td><%= appointment.max_slots %></td>
+        <td><%= appointment.created_at %></td>
+        <td><%= appointment.updated_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
