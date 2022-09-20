@@ -12,8 +12,15 @@ user = User.create!(first_name: 'User', last_name: 'One', email: 'user-1@example
 User.create!(first_name: 'Admin', last_name: 'One', email: 'admin-1@example.com',
              password: 'password', password_confirmation: 'password', admin: true)
 
-business = user.businesses.create!(name: 'RQ Barber Shop')
-business.create_address!(
+barber_shop = user.businesses.create!(
+  name: 'RQ Barber Shop',
+  timezone: 'Asia/Manila'
+)
+spa = user.businesses.create!(
+  name: 'The Spa'
+)
+
+barber_shop.create_address!(
   line_one: 'Blk 1 Lot 2, My Village',
   line_two: 'Brgy. Rose',
   city: 'Biñan',
