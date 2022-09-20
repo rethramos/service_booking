@@ -9,3 +9,8 @@ two:
   business: one
   name: 'Massage'
   description: 'Massages'
+
+three:
+  business: two
+  name: 'Treatment'
+  description: 'Scalp treatment, dandruff, etc.'

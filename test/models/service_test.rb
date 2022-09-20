@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class ServiceTest < ActiveSupport::TestCase
   def setup
@@ -9,11 +9,11 @@ class ServiceTest < ActiveSupport::TestCase
     )
   end
 
-  test "should be valid" do
+  test 'should be valid' do
     assert @service.valid?
   end
 
-  test "should require name" do
+  test 'should require name' do
     @service.name = '    '
     assert_not @service.valid?
   end
@@ -25,35 +25,42 @@ class ServiceTest < ActiveSupport::TestCase
 
     copy.business = businesses(:two)
     assert copy.valid?
-    
   end
 
-  test "name should be at most 100 characters" do
+  test 'name should be at most 100 characters' do
     @service.name = 'a' * 101
     assert_not @service.valid?
   end
 
-  test "should require description" do
+  test 'service category must belong to the same business' do
+    @service.service_category = service_categories(:three)
+    assert_not @service.valid?
+
+    @service.service_category = service_categories(:one)
+    assert @service.valid?
+  end
+
+  test 'should require description' do
     @service.description = '    '
     assert_not @service.valid?
   end
 
-  test "description should be at most 500 characters" do
+  test 'description should be at most 500 characters' do
     @service.description = 'a' * 501
     assert_not @service.valid?
   end
 
-  test "should require unit price" do
+  test 'should require unit price' do
     @service.unit_price = '    '
     assert_not @service.valid?
   end
 
-  test "unit price should be numeric" do
+  test 'unit price should be numeric' do
     @service.unit_price = '10O'
     assert_not @service.valid?
   end
 
-  test "unit price should be non-negative" do
+  test 'unit price should be non-negative' do
     @service.unit_price = -0.01
     assert_not @service.valid?
   end
