@@ -34,7 +34,7 @@ class Admin::ServiceCategoriesController < Admin::AdminController
   private
 
   def set_business
-    @business = Business.find(params[:id])
+    @business = Business.find(params[:business_id])
   end
 
   def service_category_params

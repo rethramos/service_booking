@@ -1,6 +1,8 @@
 <h1>New Service Category</h1>
 <p>for <strong><%= @business.name %></strong></p>
-<%= form_with model: @service_category, url: admin_service_categories_path, class: 'd-flex flex-column gap-3' do |f| %>
+<%= form_with model: @service_category,
+  url: admin_business_service_categories_path(@business),
+  class: 'd-flex flex-column gap-3' do |f| %>
   <%= render 'shared/error_messages', object: @service_category %>
   <div class="form-group">
     <%= f.label :name %>

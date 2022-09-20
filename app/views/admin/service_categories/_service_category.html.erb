@@ -10,6 +10,6 @@
   <div class="card-body">
     <p class="card-title h5 text-truncate"><%= service_category.name %></p>
     <p class="card-text text-truncate"><%= service_category.description %></p>
-    <%= link_to 'View services', '#', class: 'card-link' %>
+    <%= link_to 'Edit', edit_admin_service_category_path(service_category), class: 'card-link' %>
   </div>
 </div>
