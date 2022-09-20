@@ -13,6 +13,13 @@ class Service < ApplicationRecord
   validates :unit_price, presence: true,
                          numericality: { greater_than_or_equal_to: 0.00 }
   validates :currency, presence: true, length: { maximum: 3 }
+  validates :image, presence: true, content_type: {
+    in: %w[image/jpeg image/png],
+    message: 'must be a valid image format'
+  }, size: {
+    less_than: 5.megabytes,
+    message: 'should be less than 5MB'
+  }
 
   private
 

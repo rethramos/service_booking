@@ -1,14 +1,9 @@
-<p style="color: green"><%= notice %></p>
-
 <h1>Services</h1>
-
-<div id="services">
+<%= link_to "New service", new_admin_business_service_path(@business) %>
+<div id="services" class="mt-4">
   <% @services.each do |service| %>
     <%= render service %>
     <p>
-      <%= link_to "Show this service", admin_service_path(service) %>
     </p>
   <% end %>
 </div>
-
-<%= link_to "New service", new_admin_service_path %>

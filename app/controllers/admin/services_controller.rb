@@ -1,11 +1,11 @@
 class Admin::ServicesController < Admin::AdminController
   before_action :set_service, only: %i[ show edit update destroy ]
-  before_action :set_business, only: [:new, :create]
+  before_action :set_business
   before_action :set_categories, only: [:new, :create]
 
   # GET /admin/businesses/1/services or /admin/businesses/1/services.json
   def index
-    @services = Service.all
+    @services = @business.services
   end
 
   # GET /admin/businesses/1/services/1 or /admin/businesses/1/services/1.json
@@ -27,7 +27,7 @@ class Admin::ServicesController < Admin::AdminController
 
     respond_to do |format|
       if @service.save
-        format.html { redirect_to admin_service_url(@service), notice: "Service was successfully created." }
+        format.html { redirect_to admin_business_service_url(@business, @service), success: "Service was successfully created." }
         format.json { render :show, status: :created, location: @service }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -40,7 +40,7 @@ class Admin::ServicesController < Admin::AdminController
   def update
     respond_to do |format|
       if @service.update(service_params)
-        format.html { redirect_to admin_service_url(@service), notice: "Service was successfully updated." }
+        format.html { redirect_to admin_business_service_url(@business, @service), success: "Service was successfully updated." }
         format.json { render :show, status: :ok, location: @service }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -49,12 +49,12 @@ class Admin::ServicesController < Admin::AdminController
     end
   end
 
-  # DELETE /services/1 or /services/1.json
+  # DELETE /admin/businesses/1/services/1 or /admin/businesses/1/services/1.json
   def destroy
     @service.destroy
 
     respond_to do |format|
-      format.html { redirect_to services_url, notice: "Service was successfully destroyed." }
+      format.html { redirect_to admin_business_services_url(@business), success: "Service was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -66,7 +66,7 @@ class Admin::ServicesController < Admin::AdminController
     end
 
     def set_business
-      @business = Business.find(params[:id])  
+      @business = Business.find(params[:business_id])  
     end
 
     def set_categories
@@ -75,6 +75,13 @@ class Admin::ServicesController < Admin::AdminController
 
     # Only allow a list of trusted parameters through.
     def service_params
-      params.require(:service).permit(:business_id, :service_category_id, :name, :description, :unit_price)
+      params.require(:service).permit(
+        :business_id,
+        :service_category_id,
+        :name,
+        :description,
+        :unit_price,
+        :image
+      )
     end
 end

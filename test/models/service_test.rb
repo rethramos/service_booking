@@ -22,6 +22,7 @@ class ServiceTest < ActiveSupport::TestCase
 
   test 'name should be unique per business' do
     copy = @service.dup
+    copy.image.attach(new_attachable)
     @service.save
     assert_not copy.valid?
 
