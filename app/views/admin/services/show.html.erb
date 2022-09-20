@@ -35,7 +35,10 @@
         <td><%= appointment.max_slots %></td>
         <td><%= appointment.created_at %></td>
         <td><%= appointment.updated_at %></td>
-        <td><%= link_to 'Edit', edit_admin_appointment_path(appointment) %></td>
+        <td><%= link_to 'Edit', edit_admin_appointment_path(
+          appointment,
+          service_id: @service.id
+        ) %></td>
       </tr>
     <% end %>
   </tbody>

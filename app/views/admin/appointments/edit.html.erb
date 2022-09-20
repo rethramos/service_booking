@@ -1,0 +1,5 @@
+<h1>Updating appointment</h1>
+<p>for <strong><%= @service.name %></strong></p>
+<h1></h1>
+<%= render 'form', appointment: @appointment,
+  url: admin_appointment_path(@appointment) %>
