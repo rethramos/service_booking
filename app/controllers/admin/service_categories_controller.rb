@@ -26,9 +26,20 @@ class Admin::ServiceCategoriesController < Admin::AdminController
   end
 
   def edit
+    @service_category = ServiceCategory.find(params[:id])
+    @business = @service_category.business
   end
 
   def update
+    @service_category = ServiceCategory.find(params[:id])
+    @business = @service_category.business
+
+    if @service_category.update(service_category_params)
+      flash[:success] = 'Successfully updated a service category.'
+      redirect_to admin_business_url(@business)
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
