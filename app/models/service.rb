@@ -1,4 +1,5 @@
 class Service < ApplicationRecord
+  has_many :appointments, dependent: :destroy
   belongs_to :business
   belongs_to :service_category, optional: true
   has_one_attached :image

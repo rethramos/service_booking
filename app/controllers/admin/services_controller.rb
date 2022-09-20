@@ -2,6 +2,7 @@ class Admin::ServicesController < Admin::AdminController
   before_action :set_service, only: %i[ show edit update destroy ]
   before_action :set_business
   before_action :set_categories, only: [:new, :create, :edit, :update]
+  around_action :set_time_zone, only: [:show]
 
   # GET /admin/businesses/1/services or /admin/businesses/1/services.json
   def index
@@ -10,6 +11,7 @@ class Admin::ServicesController < Admin::AdminController
 
   # GET /admin/businesses/1/services/1 or /admin/businesses/1/services/1.json
   def show
+    @appointments = @service.appointments
   end
 
   # GET /admin/businesses/1/services/1/new
@@ -79,6 +81,10 @@ class Admin::ServicesController < Admin::AdminController
       @categories = @business.service_categories.map {|c| [c.name, c.id]}
     end
 
+    def set_time_zone
+      Time.use_zone(@business.timezone) { yield }
+    end
+  
     # Only allow a list of trusted parameters through.
     def service_params
       params.require(:service).permit(
