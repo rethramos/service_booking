@@ -1,33 +1,27 @@
-require "test_helper"
+require 'test_helper'
 
 class Admin::ServiceCategoriesControllerTest < ActionDispatch::IntegrationTest
-  test "should get new" do
-    get new_admin_service_category_path(businesses(:one))
+  def setup
+    @service_category = service_categories(:one)
+  end
+
+  test 'should redirect new to admin login for guests' do
+    get new_admin_business_service_category_path(businesses(:one))
     assert_redirected_to admin_login_url
   end
 
-  test "should get create" do
-    post admin_service_categories_path(businesses(:one))
+  test 'should redirect create to admin login for guests' do
+    post admin_business_service_categories_path(businesses(:one))
     assert_redirected_to admin_login_url
   end
 
-  # test "should get index" do
-  #   get admin_service_categories_index_url
-  #   assert_response :success
-  # end
+  test 'should redirect edit to admin login for guests' do
+    get edit_admin_service_category_path(@service_category)
+    assert_redirected_to admin_login_url
+  end
 
-  # test "should get show" do
-  #   get admin_service_categories_show_url
-  #   assert_response :success
-  # end
-
-  # test "should get edit" do
-  #   get admin_service_categories_edit_url
-  #   assert_response :success
-  # end
-
-  # test "should get update" do
-  #   get admin_service_categories_update_url
-  #   assert_response :success
-  # end
+  test 'should redirect update to admin login for guests' do
+    patch admin_service_category_path(@service_category)
+    assert_redirected_to admin_login_url
+  end
 end
