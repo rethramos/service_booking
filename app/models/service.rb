@@ -1,6 +1,7 @@
 class Service < ApplicationRecord
   belongs_to :business
   belongs_to :service_category, optional: true
+  has_one_attached :image
 
   before_validation :upcase_currency
 

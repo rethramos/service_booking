@@ -7,6 +7,8 @@ class ServiceTest < ActiveSupport::TestCase
       description: 'Descriptions',
       unit_price: 1500.00
     )
+    filename = 'kitten.jpg'
+    @service.image.attach(new_attachable)
   end
 
   test 'should be valid' do

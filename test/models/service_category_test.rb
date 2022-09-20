@@ -7,13 +7,7 @@ class ServiceCategoryTest < ActiveSupport::TestCase
       description: 'Hair services'
     )
     filename = 'kitten.jpg'
-    @service_category.image.attach(
-      io: File.open(
-        Rails.root.join('test', 'fixtures', 'files', filename)
-      ),
-      filename:,
-      content_type: 'image/jpeg'
-    )
+    @service_category.image.attach(new_attachable)
   end
 
   test 'should be valid' do
