@@ -13,7 +13,7 @@ Rails.application.routes.draw do
       resources :services
       resources :service_categories, only: %i[new create]
     end
-    resources :service_categories, only: %i[edit update]
+    resources :service_categories, only: %i[edit update destroy]
     resources :appointments, only: %i[new create edit update destroy]
   end
 

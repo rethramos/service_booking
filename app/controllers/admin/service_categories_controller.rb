@@ -42,6 +42,17 @@ class Admin::ServiceCategoriesController < Admin::AdminController
     end
   end
 
+  def destroy
+    @service_category = ServiceCategory.find(params[:id])
+    @service_category.destroy
+
+    respond_to do |format|
+      flash[:success] = "Service category was successfully destroyed."
+      format.html { redirect_to admin_business_url(@service_category.business_id) }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   def set_business
