@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :services
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   namespace :admin do
     get 'service_categories/index'
@@ -13,6 +12,7 @@ Rails.application.routes.draw do
     resources :businesses, only: %i[index show] do
       member do
         resources :service_categories, only: %i[new create]
+        resources :services
       end
     end
   end

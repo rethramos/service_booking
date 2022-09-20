@@ -6,9 +6,9 @@
   <% @services.each do |service| %>
     <%= render service %>
     <p>
-      <%= link_to "Show this service", service %>
+      <%= link_to "Show this service", admin_service_path(service) %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New service", new_service_path %>
+<%= link_to "New service", new_admin_service_path %>

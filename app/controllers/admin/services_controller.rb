@@ -1,31 +1,33 @@
-class ServicesController < ApplicationController
+class Admin::ServicesController < Admin::AdminController
   before_action :set_service, only: %i[ show edit update destroy ]
+  before_action :set_business, only: [:new, :create]
+  before_action :set_categories, only: [:new, :create]
 
-  # GET /services or /services.json
+  # GET /admin/businesses/1/services or /admin/businesses/1/services.json
   def index
     @services = Service.all
   end
 
-  # GET /services/1 or /services/1.json
+  # GET /admin/businesses/1/services/1 or /admin/businesses/1/services/1.json
   def show
   end
 
-  # GET /services/new
+  # GET /admin/businesses/1/services/1/new
   def new
-    @service = Service.new
+    @service = @business.services.build
   end
 
   # GET /services/1/edit
   def edit
   end
 
-  # POST /services or /services.json
+  # POST /admin/businesses/1/services/1/services or /admin/businesses/1/services/1/services.json
   def create
-    @service = Service.new(service_params)
+    @service = @business.services.build(service_params)
 
     respond_to do |format|
       if @service.save
-        format.html { redirect_to service_url(@service), notice: "Service was successfully created." }
+        format.html { redirect_to admin_service_url(@service), notice: "Service was successfully created." }
         format.json { render :show, status: :created, location: @service }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +40,7 @@ class ServicesController < ApplicationController
   def update
     respond_to do |format|
       if @service.update(service_params)
-        format.html { redirect_to service_url(@service), notice: "Service was successfully updated." }
+        format.html { redirect_to admin_service_url(@service), notice: "Service was successfully updated." }
         format.json { render :show, status: :ok, location: @service }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -61,6 +63,14 @@ class ServicesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_service
       @service = Service.find(params[:id])
+    end
+
+    def set_business
+      @business = Business.find(params[:id])  
+    end
+
+    def set_categories
+      @categories = @business.service_categories.map {|c| [c.name, c.id]}
     end
 
     # Only allow a list of trusted parameters through.
