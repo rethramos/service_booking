@@ -7,6 +7,7 @@ module Mutations
     def resolve(credentials: nil)
       user = User.find_by(email: credentials[:email])
       if user && user.authenticate(credentials[:password])
+        context[:session][:user_id] = user.id
         user
       else
         :invalid_credentials
