@@ -22,6 +22,12 @@ class AppointmentTest < ActiveSupport::TestCase
     assert_not @appointment.valid?
   end
 
+  test 'timeslot should be unique per service' do
+    copy = @appointment.dup
+    @appointment.save
+    assert_not copy.valid?
+  end
+
   test 'should require max slots' do
     @appointment.max_slots = '    '
     assert_not @appointment.valid?
