@@ -1,12 +1,12 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# one:
-#   user: john
-#   payment_option: one
-#   first_name: MyString
-#   last_name: MyString
-#   email: MyString
-#   contact_number: MyString
+one:
+  user: john
+  payment_option: one
+  first_name: MyString
+  last_name: MyString
+  email: myemail@example.com
+  contact_number: "+639212344321"
 
 # two:
 #   user: two

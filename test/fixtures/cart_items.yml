@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# one:
-#   cart: one
-#   service: one
-#   appointment: one
-#   addon: MyText
-#   slots: 1
+one:
+  cart: one
+  service: one
+  appointment: one
+  addon: MyText
+  slots: 1
 
 # two:
 #   cart: two

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_21_153307) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_21_164925) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -73,6 +73,23 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_21_153307) do
     t.index ["name"], name: "index_booking_statuses_on_name", unique: true
   end
 
+  create_table "bookings", force: :cascade do |t|
+    t.bigint "receipt_id", null: false
+    t.bigint "service_id"
+    t.bigint "booking_status_id"
+    t.string "service_name", null: false
+    t.datetime "service_appointment", null: false
+    t.decimal "service_unit_price", precision: 10, scale: 2, null: false
+    t.string "service_currency", null: false
+    t.integer "slots", null: false
+    t.text "addon"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["booking_status_id"], name: "index_bookings_on_booking_status_id"
+    t.index ["receipt_id"], name: "index_bookings_on_receipt_id"
+    t.index ["service_id"], name: "index_bookings_on_service_id"
+  end
+
   create_table "businesses", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name"
@@ -91,7 +108,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_21_153307) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["appointment_id"], name: "index_cart_items_on_appointment_id"
-    t.index ["cart_id", "service_id", "appointment_id"], name: "index_cart_items_on_cart_id_and_service_id_and_appointment_id", unique: true
     t.index ["cart_id"], name: "index_cart_items_on_cart_id"
     t.index ["service_id"], name: "index_cart_items_on_service_id"
   end
@@ -162,6 +178,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_21_153307) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "appointments", "services"
+  add_foreign_key "bookings", "booking_statuses"
+  add_foreign_key "bookings", "receipts"
+  add_foreign_key "bookings", "services"
   add_foreign_key "businesses", "users"
   add_foreign_key "cart_items", "appointments"
   add_foreign_key "cart_items", "carts"

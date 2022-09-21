@@ -1,6 +1,7 @@
 class Service < ApplicationRecord
   has_many :appointments, dependent: :destroy
   has_many :cart_items, dependent: :destroy
+  has_many :bookings, dependent: :nullify
   belongs_to :business
   belongs_to :service_category, optional: true
   has_one_attached :image
@@ -26,7 +27,7 @@ class Service < ApplicationRecord
   private
 
   def upcase_currency
-    currency.upcase
+    currency.upcase!
   end
 
   def category_belongs_to_the_same_business

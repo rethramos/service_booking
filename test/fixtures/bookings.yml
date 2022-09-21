@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# one:
+#   receipt: one
+#   service: one
+#   booking_status: one
+#   service_name: MyString
+#   service_appointment: 2022-09-21 23:58:20
+#   service_unit_price: 9.99
+#   service_currency: MyString
+#   slots: 1
+#   addon: MyText
+
+# two:
+#   receipt: two
+#   service: two
+#   booking_status: two
+#   service_name: MyString
+#   service_appointment: 2022-09-21 23:58:20
+#   service_unit_price: 9.99
+#   service_currency: MyString
+#   slots: 1
+#   addon: MyText
