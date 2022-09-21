@@ -18,6 +18,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 import BaseButton from "../components/shared/BaseButton.vue";
 
 export default {
@@ -30,8 +31,10 @@ export default {
     };
   },
   methods: {
-    searchServices() {
+    ...mapActions('service', ['searchServices']),
+    search() {
       console.log(this.q);
+      this.searchServices({q: this.q})
     },
   },
 };
