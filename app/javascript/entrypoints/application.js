@@ -30,6 +30,7 @@ console.log(
 // Example: Import a stylesheet in app/frontend/index.css
 // import '~/index.css'
 import { createApp } from "vue";
+import 'nprogress/nprogress.css'
 import router from "../router";
 import store from "../store/store";
 import apolloClient from "../apollo";
