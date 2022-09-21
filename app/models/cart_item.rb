@@ -3,7 +3,7 @@ class CartItem < ApplicationRecord
   belongs_to :service
   belongs_to :appointment
 
-  validates :service_id, uniqueness: { scope: :cart_id }
+  validates :service_id, uniqueness: { scope: [:cart_id, :appointment_id] }
   validates :addon, length: { maximum: 300 }
   validates :slots, presence: true, numericality: { greater_than: 0 }
   validate :slots_do_not_exceed_the_maximum,
