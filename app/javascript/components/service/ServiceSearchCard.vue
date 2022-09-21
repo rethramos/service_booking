@@ -1,13 +1,17 @@
 <template lang="">
   <BaseCard class="card-body d-flex flex-row gap-4 align-items-start">
-    <img
-      :src="service.image"
-      :alt="service.name"
-      style="width: 100px; height: 100px; object-fit: cover"
-    />
+    <RouterLink :to="{ name: 'services-show', params: { id: service.id } }">
+      <img
+        :src="service.image"
+        :alt="service.name"
+        style="width: 100px; height: 100px; object-fit: cover"
+      />
+    </RouterLink>
     <div>
       <p class="text-uppercase mb-1">{{ service.serviceCategory.name }}</p>
-      <p class="h3">{{ service.name }}</p>
+      <RouterLink :to="{ name: 'services-show', params: { id: service.id } }">
+        <p class="h3">{{ service.name }}</p>
+      </RouterLink>
       <p>{{ service.business.name }}</p>
       <p>{{ service.description }}</p>
     </div>
