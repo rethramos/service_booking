@@ -2,7 +2,7 @@
   <div>
     <AppHeader />
     <AppToast />
-    <main class="container mt-2">
+    <main class="container mt-2 main-content">
       <RouterView />
     </main>
     <AppFooter />

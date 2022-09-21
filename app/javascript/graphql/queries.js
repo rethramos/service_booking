@@ -36,6 +36,13 @@ export const SERVICE_SEARCH = gql`
         name
         description
         image
+        unitPrice
+        currency
+        appointments {
+          id
+          timeslot
+          maxSlots
+        }
         business {
           id
           name
@@ -43,8 +50,33 @@ export const SERVICE_SEARCH = gql`
         serviceCategory {
           id
           name
-          image
         }
+      }
+    }
+  }
+`;
+
+export const SERVICE = gql`
+  query Service($id: ID!) {
+    service(id: $id) {
+      id
+      name
+      description
+      image
+      unitPrice
+      currency
+      appointments {
+        id
+        timeslot
+        maxSlots
+      }
+      business {
+        id
+        name
+      }
+      serviceCategory {
+        id
+        name
       }
     }
   }

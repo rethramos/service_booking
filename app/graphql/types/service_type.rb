@@ -7,6 +7,7 @@ module Types
     field :id, ID, null: false
     field :business, Types::BusinessType, null: false
     field :service_category, Types::ServiceCategoryType
+    field :appointments, [Types::AppointmentType], null: false
     field :image, String
     field :name, String, null: false
     field :description, String, null: false

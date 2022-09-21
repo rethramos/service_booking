@@ -1,6 +1,13 @@
 @import "bootstrap/scss/bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons";
 
+@include media-breakpoint-up(md) {
+  .main-content {
+    width: 50%;
+    margin: 0 auto;
+  }
+}
+
 ul,
 ol {
   list-style: none;

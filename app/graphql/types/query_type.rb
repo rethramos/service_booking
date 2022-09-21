@@ -12,6 +12,9 @@ module Types
     field :service_search, Types::ServiceType.connection_type, null: false do
       argument :filter, Types::Service::ServiceSearchFilterInputType, required: false
     end
+    field :service, Types::ServiceType do
+      argument :id, ID, required: true
+    end
 
     def me
       if context[:logged_in]
@@ -34,6 +37,12 @@ module Types
       relation = ::Service.all
       relation = relation.where('name LIKE ?', "%#{filter[:name_contains]}%") if filter[:name_contains]
       relation
+    end
+
+    def service(id:0)
+      ::Service.find(id)
+    rescue ActiveRecord::RecordNotFound
+      nil
     end
   end
 end

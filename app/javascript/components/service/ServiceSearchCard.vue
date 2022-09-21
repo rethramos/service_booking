@@ -8,7 +8,9 @@
       />
     </RouterLink>
     <div>
-      <p class="text-uppercase mb-1">{{ service.serviceCategory.name }}</p>
+      <p v-if="service.serviceCategory" class="text-uppercase mb-1">
+        {{ service.serviceCategory.name }}
+      </p>
       <RouterLink :to="{ name: 'services-show', params: { id: service.id } }">
         <p class="h3">{{ service.name }}</p>
       </RouterLink>
