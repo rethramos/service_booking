@@ -3,7 +3,7 @@
 module Types
   class ServiceType < Types::BaseObject
     field :id, ID, null: false
-    field :business_id, Integer, null: false
+    field :business, Types::BusinessType, null: false
     field :service_category_id, Integer
     field :name, String, null: false
     field :description, String, null: false
