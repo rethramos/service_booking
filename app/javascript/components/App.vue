@@ -1,15 +1,17 @@
 <template>
   <div>
-    Hello vue
-    <RouterLink :to="{ name: 'home' }">Home</RouterLink>
-    <RouterLink :to="{ name: 'register' }">Register</RouterLink>
-    <RouterView />
+    <AppHeader />
+    <main class="container mt-2">
+      <RouterView />
+    </main>
+    <AppFooter />
   </div>
 </template>
 <script>
-import Counter from "./Counter.vue";
+import AppHeader from "./shared/AppHeader.vue";
+import AppFooter from "./shared/AppFooter.vue";
 export default {
-  components: { Counter },
+  components: { AppHeader, AppFooter },
 };
 </script>
 <style></style>

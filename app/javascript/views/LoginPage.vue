@@ -1,7 +1,6 @@
 <template lang="">
   <div>
-    <h1 class="text-center">Service Booking</h1>
-    TODO: add search bar, service category cards
+    Login
   </div>
 </template>
 <script>
