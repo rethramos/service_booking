@@ -59,7 +59,7 @@ export default {
     logOut() {
       this.logoutUser().then((success) => {
         if (success) {
-          this.$router.push({ name: "home" });
+          window.location.reload()
         }
       });
     },
