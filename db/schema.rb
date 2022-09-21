@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_21_151048) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_21_153307) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -110,6 +110,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_21_151048) do
     t.index ["name"], name: "index_payment_options_on_name", unique: true
   end
 
+  create_table "receipts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "payment_option_id", null: false
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "email", null: false
+    t.string "contact_number", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_receipts_on_email", unique: true
+    t.index ["payment_option_id"], name: "index_receipts_on_payment_option_id"
+    t.index ["user_id"], name: "index_receipts_on_user_id"
+  end
+
   create_table "service_categories", force: :cascade do |t|
     t.bigint "business_id", null: false
     t.string "name", null: false
@@ -153,6 +167,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_21_151048) do
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "services"
   add_foreign_key "carts", "users"
+  add_foreign_key "receipts", "payment_options"
+  add_foreign_key "receipts", "users"
   add_foreign_key "services", "businesses"
   add_foreign_key "services", "service_categories"
 end

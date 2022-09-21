@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :businesses, dependent: :destroy
+  has_many :receipts, dependent: :destroy
   has_one :cart, dependent: :destroy
 
   before_save :downcase_email
