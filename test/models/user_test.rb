@@ -20,6 +20,16 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.valid?
   end
 
+  test 'should require timezone' do
+    @user.timezone = '    '
+    assert_not @user.valid?
+  end
+
+  test 'timezone should be supported' do
+    @user.timezone = 'Wrong'
+    assert_not @user.valid?
+  end
+
   test 'should require email' do
     @user.email = ' ' * 255
     assert_not @user.valid?

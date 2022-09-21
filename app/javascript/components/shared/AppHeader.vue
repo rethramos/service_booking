@@ -22,7 +22,7 @@
               Home
             </RouterLink>
           </li>
-          <li v-if="true" class="nav-item">
+          <li v-if="!isLoggedIn" class="nav-item">
             <RouterLink
               :to="{ name: 'register' }"
               class="nav-link"
@@ -31,12 +31,12 @@
               Register
             </RouterLink>
           </li>
-          <li v-if="true" class="nav-item">
+          <li v-if="!isLoggedIn" class="nav-item">
             <RouterLink :to="{ name: 'login' }" class="nav-link" id="login">
               Log in
             </RouterLink>
           </li>
-          <li v-if="false" class="nav-item">
+          <li v-if="isLoggedIn" class="nav-item">
             <form action="" @click.prevent="logOut" id="logout">
               <BaseButton type="submit" class="nav-link">Log out</BaseButton>
             </form>
@@ -47,9 +47,18 @@
   </header>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import BaseButton from "./BaseButton.vue";
 export default {
   components: { BaseButton },
+  computed: {
+    ...mapGetters("auth", ["isLoggedIn"]),
+  },
+  methods: {
+    logOut() {
+      console.log("TODO: implement this");
+    },
+  },
 };
 </script>
 <style lang=""></style>
