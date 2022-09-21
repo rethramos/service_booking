@@ -26,3 +26,26 @@ export const LOGOUT_USER = gql`
     logoutUser
   }
 `;
+
+export const SERVICE_SEARCH = gql`
+  query ServiceSearch($filter: ServiceSearchFilterInput) {
+    serviceSearch(filter: $filter) {
+      totalCount
+      nodes {
+        id
+        name
+        description
+        image
+        business {
+          id
+          name
+        }
+        serviceCategory {
+          id
+          name
+          image
+        }
+      }
+    }
+  }
+`;
