@@ -9,6 +9,7 @@ module Types
 
     field :me, Types::User::UserResultType, null: false
     field :logout_user, Boolean, null: false
+    field :service_search, Types::ServiceType.connection_type, null: false
 
     def me
       if context[:logged_in]
@@ -25,6 +26,10 @@ module Types
       else
         false
       end
+    end
+
+    def service_search
+      Service.all
     end
   end
 end
