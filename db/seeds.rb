@@ -29,6 +29,18 @@ barber_shop.create_address!(
   postal_code: 4024
 )
 
-BookingStatus.create!(BookingStatus::SERVED)
-BookingStatus.create!(BookingStatus::PENDING)
-BookingStatus.create!(BookingStatus::CANCELLED)
+[
+  BookingStatus::SERVED,
+  BookingStatus::PENDING,
+  BookingStatus::CANCELLED
+].each do |name|
+  BookingStatus.create!(name:)
+end
+
+[
+  PaymentOption::PAYPAL,
+  PaymentOption::STORE,
+  PaymentOption::VISA
+].each do |name|
+  PaymentOption.create!(name:)
+end
