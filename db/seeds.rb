@@ -28,3 +28,7 @@ barber_shop.create_address!(
   country: 'Philippines',
   postal_code: 4024
 )
+
+BookingStatus.create!(BookingStatus::SERVED)
+BookingStatus.create!(BookingStatus::PENDING)
+BookingStatus.create!(BookingStatus::CANCELLED)
