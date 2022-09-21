@@ -1,7 +1,7 @@
 <template lang="">
   <div>
     <h1 class="text-center">Service Booking</h1>
-    <form @submit.prevent="searchServices">
+    <form @submit.prevent="search">
       <label for="service_search">Search services by name</label>
       <div class="input-group">
         <input

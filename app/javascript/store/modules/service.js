@@ -16,7 +16,12 @@ export const mutations = {
 export const actions = {
   searchServices({commit}, { q }) {
     return apolloClient.query({
-      query: SERVICE_SEARCH
+      query: SERVICE_SEARCH,
+      variables: {
+        filter: {
+          nameContains: q
+        }
+      }
     }).then(({data: {serviceSearch}}) => {
       commit('SET_SERVICES', serviceSearch.nodes)
       return serviceSearch

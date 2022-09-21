@@ -28,8 +28,8 @@ export const LOGOUT_USER = gql`
 `;
 
 export const SERVICE_SEARCH = gql`
-  query ServiceSearch {
-    serviceSearch {
+  query ServiceSearch($filter: ServiceSearchFilterInput) {
+    serviceSearch(filter: $filter) {
       totalCount
       nodes {
         id
