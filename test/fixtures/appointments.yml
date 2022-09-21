@@ -9,3 +9,8 @@ two:
   service: two
   timeslot: <%= 2.weeks.from_now %>
   max_slots: 1
+
+three:
+  service: one
+  timeslot: <%= 3.weeks.from_now %>
+  max_slots: 10
