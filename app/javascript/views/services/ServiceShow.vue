@@ -28,17 +28,40 @@
         :valueKey="'id'"
         :labelKey="'timeslot'"
         class="form-select"
+        v-model="cartItem.appointmentId"
       />
+      <BaseInput
+        type="number"
+        label="Slots"
+        id="cart_item_slots"
+        min="1"
+        v-model="cartItem.slots"
+        class="form-control"
+      />
+
+      <div class="form-group">
+        <label for="cart_item_addon">Add-ons</label>
+        <textarea
+          class="form-control"
+          v-model="cartItem.addon"
+          name=""
+          id="cart_item_addon"
+          cols="30"
+          rows="10"
+        ></textarea>
+      </div>
       <BaseButton class="btn-primary">Book Now</BaseButton>
     </form>
   </section>
 </template>
 <script>
 import BaseButton from "../../components/shared/BaseButton.vue";
+import BaseInput from "../../components/shared/BaseInput.vue";
 import BaseSelect from "../../components/shared/BaseSelect.vue";
 export default {
   components: {
     BaseSelect,
+    BaseInput,
     BaseButton,
   },
   props: {
@@ -46,6 +69,15 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  data() {
+    return {
+      cartItem: {
+        appointmentId: 0,
+        slots: 1,
+        addon: "",
+      },
+    };
   },
   computed: {
     formattedAppointments() {
