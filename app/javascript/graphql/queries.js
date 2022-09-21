@@ -20,3 +20,9 @@ export const ME = gql`
     }
   }
 `;
+
+export const LOGOUT_USER = gql`
+  query {
+    logoutUser
+  }
+`;

@@ -47,7 +47,7 @@
   </header>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import BaseButton from "./BaseButton.vue";
 export default {
   components: { BaseButton },
@@ -55,8 +55,13 @@ export default {
     ...mapGetters("auth", ["isLoggedIn"]),
   },
   methods: {
+    ...mapActions("auth", ["logoutUser"]),
     logOut() {
-      console.log("TODO: implement this");
+      this.logoutUser().then((success) => {
+        if (success) {
+          this.$router.push({ name: "home" });
+        }
+      });
     },
   },
 };
