@@ -3,7 +3,7 @@
 //
 //    <%= vite_client_tag %>
 //    <%= vite_javascript_tag 'application' %>
-console.log('Vite ⚡️ Rails')
+console.log("Vite ⚡️ Rails");
 
 // If using a TypeScript entrypoint file:
 //     <%= vite_typescript_tag 'application' %>
@@ -11,7 +11,10 @@ console.log('Vite ⚡️ Rails')
 // If you want to use .jsx or .tsx, add the extension:
 //     <%= vite_javascript_tag 'application.jsx' %>
 
-console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify.app/guide/rails')
+console.log(
+  "Visit the guide for more information: ",
+  "https://vite-ruby.netlify.app/guide/rails"
+);
 
 // Example: Load Rails libraries in Vite.
 //
@@ -26,9 +29,15 @@ console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify
 
 // Example: Import a stylesheet in app/frontend/index.css
 // import '~/index.css'
-import { createApp } from "vue"
-import router from '../router'
-import store from '../store/store'
-import App from '../components/App.vue'
+import { createApp } from "vue";
+import router from "../router";
+import store from "../store/store";
+import apolloClient from "../apollo";
+import App from "../components/App.vue";
+import { createApolloProvider } from "@vue/apollo-option";
 
-createApp(App).use(router).use(store).mount('#app')
+const apolloProvider = createApolloProvider({
+  defaultClient: apolloClient,
+});
+
+createApp(App).use(router).use(store).use(apolloProvider).mount("#app");
