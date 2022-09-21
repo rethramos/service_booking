@@ -1,5 +1,6 @@
 module Types
   class MutationType < Types::BaseObject
+    field :add_to_cart, mutation: Mutations::AddToCart
     field :login_user, mutation: Mutations::LoginUser
     field :create_user, mutation: Mutations::CreateUser
     # TODO: remove me

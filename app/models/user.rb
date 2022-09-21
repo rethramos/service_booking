@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_one :cart, dependent: :destroy
 
   before_save :downcase_email
+  after_create :create_cart!
 
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
