@@ -6,6 +6,7 @@ gem 'aws-sdk-s3', require: false
 gem 'active_storage_validations'
 gem 'vite_rails'
 gem 'graphql'
+gem 'phonelib'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.3", ">= 7.0.3.1"
