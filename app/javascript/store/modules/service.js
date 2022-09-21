@@ -43,9 +43,8 @@ export const actions = {
         id,
       },
     });
-
     if (service) {
-      commit("SET_SERVICES", [...state.services, s]);
+      commit("SET_SERVICES", [...state.services, service]);
     }
 
     return service;

@@ -39,7 +39,7 @@ export default {
     };
   },
   computed: {
-    ...mapState('service', ['services'])
+    ...mapState("service", ["services"]),
   },
   methods: {
     ...mapActions("service", ["searchServices"]),
@@ -47,6 +47,9 @@ export default {
       console.log(this.q);
       this.searchServices({ q: this.q });
     },
+  },
+  created() {
+    this.searchServices({ q: this.q });
   },
 };
 </script>
