@@ -1,4 +1,5 @@
 class Receipt < ApplicationRecord
+  has_many :bookings, dependent: :destroy
   belongs_to :user
   belongs_to :payment_option
 

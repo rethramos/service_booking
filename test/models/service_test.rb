@@ -81,6 +81,6 @@ class ServiceTest < ActiveSupport::TestCase
   test 'currency should be in uppercase' do
     @service.currency = 'usd'
     @service.save
-    assert @service.currency = 'USD'
+    assert @service.currency == 'USD'
   end
 end

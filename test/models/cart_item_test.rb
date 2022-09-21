@@ -29,6 +29,7 @@ class CartItemTest < ActiveSupport::TestCase
     assert_not copy.valid?
 
     @cart_item.appointment = appointments(:one)
+    puts @cart_item.valid?, @cart_item.errors.messages
     assert @cart_item.valid?
   end
 
