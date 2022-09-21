@@ -3,7 +3,7 @@ require "test_helper"
 class BookingStatusTest < ActiveSupport::TestCase
   def setup
     @booking_status = BookingStatus.new(
-      name: 'Served'
+      name: BookingStatus::SERVED
     )
   end
 
