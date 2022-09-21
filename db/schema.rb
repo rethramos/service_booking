@@ -67,10 +67,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_21_122855) do
   end
 
   create_table "booking_statuses", force: :cascade do |t|
-    t.string "type", null: false
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["type"], name: "index_booking_statuses_on_type", unique: true
+    t.index ["name"], name: "index_booking_statuses_on_name", unique: true
   end
 
   create_table "businesses", force: :cascade do |t|
