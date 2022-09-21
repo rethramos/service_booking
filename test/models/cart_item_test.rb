@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class CartItemTest < ActiveSupport::TestCase
   def setup
@@ -9,7 +9,7 @@ class CartItemTest < ActiveSupport::TestCase
     )
   end
 
-  test "should be valid" do
+  test 'should be valid' do
     assert @cart_item.valid?
   end
 
@@ -21,16 +21,6 @@ class CartItemTest < ActiveSupport::TestCase
   test 'should require service' do
     @cart_item.service = nil
     assert_not @cart_item.valid?
-  end
-  
-  test 'should be unique per cart and appointment' do
-    copy = @cart_item.dup
-    @cart_item.save
-    assert_not copy.valid?
-
-    @cart_item.appointment = appointments(:one)
-    puts @cart_item.valid?, @cart_item.errors.messages
-    assert @cart_item.valid?
   end
 
   test 'should require appointment' do
