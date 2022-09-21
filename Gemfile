@@ -5,6 +5,7 @@ ruby "3.1.2"
 gem 'aws-sdk-s3', require: false
 gem 'active_storage_validations'
 gem 'vite_rails'
+gem 'graphql'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.3", ">= 7.0.3.1"
@@ -80,3 +81,4 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+gem "graphiql-rails", group: :development
