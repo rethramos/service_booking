@@ -439,6 +439,7 @@ __metadata:
     esbuild: ^0.15.7
     graphql: ^16.6.0
     graphql-tag: ^2.12.6
+    lodash: ^4.17.21
     sass: ^1.54.9
     vite: ^3.0.0
     vite-plugin-ruby: ^3.1.0
@@ -1456,6 +1457,13 @@ __metadata:
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
   checksum: 8a95213a5a77deb6cbe94d86340e8d9ace2b93bc367790b260101d2f36a2eaf4e4e22d9fa9cf459b38af3a32fb4190e638024cf82ec95ef708680e405ea7cc78
+  languageName: node
+  linkType: hard
+
+"lodash@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash@npm:4.17.21"
+  checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
   languageName: node
   linkType: hard
 
