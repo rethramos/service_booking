@@ -23,10 +23,13 @@ class CartItemTest < ActiveSupport::TestCase
     assert_not @cart_item.valid?
   end
   
-  test 'service should be unique per cart' do
+  test 'should be unique per cart and appointment' do
     copy = @cart_item.dup
     @cart_item.save
     assert_not copy.valid?
+
+    @cart_item.appointment = appointments(:one)
+    assert @cart_item.valid?
   end
 
   test 'should require appointment' do
