@@ -24,3 +24,25 @@ export const CREATE_USER = gql`
     }
   }
 `;
+
+export const LOGIN_USER = gql`
+  mutation LoginUser($input: LoginUserInput!) {
+    loginUser(input: $input) {
+      __typename
+      ... on LoginUserPayload {
+        user {
+          id
+          email
+          firstName
+          lastName
+          admin
+          timezone
+        }
+      }
+
+      ... on InvalidCredentials {
+        message
+      }
+    }
+  }
+`;

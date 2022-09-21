@@ -19,10 +19,7 @@
         class="form-control"
       />
       <div class="form-group">
-        <BaseButton
-          type="submit"
-          class="btn-primary w-100"
-        >
+        <BaseButton type="submit" class="btn-primary w-100">
           Log in
         </BaseButton>
       </div>
@@ -33,6 +30,7 @@
 import BaseCard from "../components/shared/BaseCard.vue";
 import BaseInput from "../components/shared/BaseInput.vue";
 import BaseButton from "../components/shared/BaseButton.vue";
+import { mapActions, mapMutations } from "vuex";
 export default {
   components: {
     BaseCard,
@@ -48,10 +46,36 @@ export default {
     };
   },
   methods: {
-    login() {
+    ...mapActions("auth", ["loginUser"]),
+    ...mapMutations("toast", ["SET_TOAST"]),
+    logIn() {
+      this.loginUser(this.credentials).then((loginUser) => {
+        switch (loginUser.__typename) {
+          case "LoginUserPayload":
+            this.SET_TOAST({
+              header: "Success",
+              isVisible: true,
+              message: `Welcome, ${loginUser.user.firstName}!`,
+              type: "success",
+            });
+            this.$router.push({ name: "home" });
+            break;
 
-    }
-  }
+          case "InvalidCredentials":
+            this.SET_TOAST({
+              header: "Error",
+              isVisible: true,
+              message: loginUser.message,
+              type: "danger",
+            });
+            break;
+
+          default:
+            break;
+        }
+      });
+    },
+  },
 };
 </script>
 <style lang=""></style>

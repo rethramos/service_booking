@@ -1,5 +1,8 @@
 <template>
-  <div class="toast-container position-fixed top-0 end-0 p-3">
+  <div
+    class="toast-container position-fixed top-0 end-0 p-3"
+    style="z-index: 9"
+  >
     <div
       id="liveToast"
       :class="[{ show: toast.isVisible }, `text-bg-${toast.type}`]"
@@ -22,19 +25,19 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState } from "vuex";
 
 export default {
   props: {},
   methods: {
-    ...mapActions('toast', ['toggleToast']),
+    ...mapActions("toast", ["toggleToast"]),
     hideToast() {
-      this.toggleToast(false)
+      this.toggleToast(false);
     },
   },
   computed: {
-    ...mapState('toast', ['toast']),
+    ...mapState("toast", ["toast"]),
   },
-}
+};
 </script>
 <style lang="scss"></style>
