@@ -3,6 +3,7 @@ class PaymentOption < ApplicationRecord
   VISA = 'VISA'
   STORE = 'OFFLINE-STORE'
 
-  validates :name, presence: true, length: { maximum: 100 }, uniqueness: true
+  has_many :receipts, dependent: :destroy
 
+  validates :name, presence: true, length: { maximum: 100 }, uniqueness: true
 end
