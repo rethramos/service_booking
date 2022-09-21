@@ -58,10 +58,10 @@
   </BaseCard>
 </template>
 <script>
+import { mapActions, mapMutations } from "vuex";
 import BaseCard from "../components/shared/BaseCard.vue";
 import BaseInput from "../components/shared/BaseInput.vue";
 import ErrorMessages from "../components/shared/ErrorMessages.vue";
-
 
 export default {
   data() {
@@ -74,13 +74,27 @@ export default {
         password: "",
         passwordConfirmation: "",
       },
-      errors: []
+      errors: [],
     };
   },
   methods: {
+    ...mapActions("auth", ["createUser"]),
+    ...mapMutations("toast", ["SET_TOAST"]),
     register() {
-      console.log(this.user)
-    }
+      this.createUser(this.user).then((createUser) => {
+        if (createUser.__typename === "CreateUserPayload") {
+          this.SET_TOAST({
+            header: "Success",
+            isVisible: true,
+            message: `Welcome, ${createUser.user.firstName}!`,
+            type: "success",
+          });
+          this.$router.push({ name: "home" });
+        } else if (createUser.__typename === "ValidationFailed") {
+          this.errors = createUser.errors;
+        }
+      });
+    },
   },
   components: { BaseCard, BaseInput, ErrorMessages },
 };

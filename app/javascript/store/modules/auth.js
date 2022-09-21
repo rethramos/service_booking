@@ -35,7 +35,9 @@ export const actions = {
         },
       },
     }).then(({ data: { createUser } }) => {
-      console.log(createUser)
+      if (createUser.__typename === 'CreateUserPayload') {
+        commit('SET_CURRENT_USER', createUser.user)
+      }
       return createUser
     })
   },
