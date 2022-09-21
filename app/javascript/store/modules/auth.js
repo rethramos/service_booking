@@ -1,5 +1,5 @@
 import apolloClient from "../../apollo";
-import { CREATE_USER } from "../../graphql/mutations";
+import { CREATE_USER, LOGIN_USER } from "../../graphql/mutations";
 import { LOGOUT_USER, ME } from "../../graphql/queries";
 
 export const namespaced = true;
@@ -59,6 +59,27 @@ export const actions = {
           commit("SET_CURRENT_USER", createUser.user);
         }
         return createUser;
+      });
+  },
+  loginUser({ commit }, { email, password }) {
+    return apolloClient
+      .mutate({
+        mutation: LOGIN_USER,
+        variables: {
+          input: {
+            credentials: {
+              email,
+              password,
+            },
+          },
+        },
+      })
+      .then(({ data: { loginUser } }) => {
+        if (loginUser.__typename === "LoginUserPayload") {
+          commit("SET_CURRENT_USER", loginUser.user);
+        }
+
+        return loginUser;
       });
   },
   logoutUser({ commit }) {
