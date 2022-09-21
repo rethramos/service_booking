@@ -9,7 +9,8 @@
     "esbuild": "^0.15.7",
     "sass": "^1.54.9",
     "vue": "^3.2.39",
-    "vue-router": "^4.1.5"
+    "vue-router": "^4.1.5",
+    "vuex": "^4.0.2"
   },
   "scripts": {
     "build": "esbuild app/javascript/application.js app/javascript/controllers/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets",

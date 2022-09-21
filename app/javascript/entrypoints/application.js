@@ -28,6 +28,7 @@ console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify
 // import '~/index.css'
 import { createApp } from "vue"
 import router from '../router'
+import store from '../store/store'
 import App from '../components/App.vue'
 
-createApp(App).use(router).mount('#app')
+createApp(App).use(router).use(store).mount('#app')
