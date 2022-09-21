@@ -27,6 +27,7 @@ module Mutations
       )
 
       if user.save
+        context[:session][:user_id] = user.id
         user
       else
         user.errors
