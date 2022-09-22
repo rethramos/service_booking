@@ -133,6 +133,7 @@ export const RECEIPT = gql`
       }
       bookings {
         id
+        addon
         serviceName
         serviceAppointment
         serviceCurrency
@@ -141,6 +142,13 @@ export const RECEIPT = gql`
         bookingStatus {
           id
           name
+        }
+        service {
+          id
+          business {
+            id
+            name
+          }
         }
       }
     }

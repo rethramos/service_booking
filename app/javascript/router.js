@@ -7,6 +7,7 @@ import ServiceShow from "./views/services/ServiceShow.vue";
 import BookingSuccess from "./views/bookings/BookingSuccess.vue";
 import nProgress from "nprogress";
 import store from "./store/store";
+import receipt from "./graphql-requests/receipts/receipt";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -37,7 +38,18 @@ const router = createRouter({
       path: "/bookings/success",
       name: "bookings-success",
       component: BookingSuccess,
-      props: (route) => ({ receiptId: route.query.receiptId }),
+      props: true,
+      meta: { requiresAuth: true },
+      async beforeEnter(to, from, next) {
+        const result = await receipt({ id: to.query.receiptId });
+        const r = result.data.receipt;
+        if (!r || !r.bookings?.length) {
+          next({ name: "404" });
+        } else {
+          to.params.receipt = r;
+          next();
+        }
+      },
     },
     {
       path: "/404",
