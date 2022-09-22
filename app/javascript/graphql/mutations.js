@@ -74,3 +74,25 @@ export const ADD_TO_CART = gql`
     }
   }
 `;
+
+export const CREATE_RECEIPT = gql`
+  mutation CreateReceipt($input: CreateReceiptInput!) {
+    createReceipt(input: $input) {
+      __typename
+      ... on Receipt {
+        id
+        firstName
+        lastName
+      }
+      ... on ValidationFailed {
+        errors {
+          message
+          attribute
+        }
+      }
+      ... on Unauthenticated {
+        message
+      }
+    }
+  }
+`;
