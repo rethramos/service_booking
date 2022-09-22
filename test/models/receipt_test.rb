@@ -9,6 +9,14 @@ class ReceiptTest < ActiveSupport::TestCase
       email: users(:john).email,
       contact_number: '+639123456722'
     )
+    @receipt.build_address(
+      line_one: 'Something',
+      line_two: 'somthing',
+      city: 'Sity',
+      province: 'province',
+      country: 'Philippines',
+      postal_code: 4024
+    )
   end
 
   test 'should be valid' do
@@ -17,6 +25,16 @@ class ReceiptTest < ActiveSupport::TestCase
 
   test 'should require payment option' do
     @receipt.payment_option = nil
+    assert_not @receipt.valid?
+  end
+
+  test 'should require address' do
+    @receipt.address = nil
+    assert_not @receipt.valid?
+  end
+
+  test 'address should be valid' do
+    @receipt.address.country = '    '
     assert_not @receipt.valid?
   end
 
@@ -43,12 +61,6 @@ class ReceiptTest < ActiveSupport::TestCase
   test 'should require email' do
     @receipt.email = '    '
     assert_not @receipt.valid?
-  end
-  
-  test 'email addresses should be unique' do
-    duplicate_receipt = @receipt.dup
-    @receipt.save
-    assert_not duplicate_receipt.valid?
   end
 
   test 'email addresses should be saved in lower-case' do
