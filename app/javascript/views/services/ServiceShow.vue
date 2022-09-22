@@ -221,6 +221,7 @@
           </li>
         </ul>
 
+        <hr />
         <p class="h4">Account Details</p>
         <p>
           <strong>Name:</strong> {{ receipt.firstName }} {{ receipt.lastName }}
@@ -228,6 +229,17 @@
         <p><strong>Contact Number: </strong> {{ receipt.contactNumber }}</p>
         <p><strong>Email: </strong> {{ receipt.email }}</p>
 
+        <hr />
+        <p><strong>Line One:</strong> {{ receipt.address.lineOne }}</p>
+        <p><strong>Line Two:</strong> {{ receipt.address.lineTwo }}</p>
+        <p>
+          <strong>City: </strong> {{ receipt.address.city }} (ZIP:
+          {{ receipt.address.postalCode }})
+        </p>
+        <p><strong>Province: </strong> {{ receipt.address.province }}</p>
+        <p><strong>Country:</strong> {{ receipt.address.country }}</p>
+
+        <hr />
         <p class="h4">Payment Method</p>
         <p>{{ selectedPaymentOption.name }}</p>
 
@@ -258,6 +270,7 @@ import paymentOptions from "../../graphql-requests/payment-options/payment-optio
 import createReceipt from "../../graphql-requests/receipts/create-receipt";
 import placeBookings from "../../graphql-requests/bookings/place-bookings";
 import me from "../../graphql-requests/user/me";
+import { mapMutations } from "vuex";
 
 export default {
   components: {
@@ -316,6 +329,7 @@ export default {
     },
   },
   methods: {
+    ...mapMutations("toast", ["SET_TOAST"]),
     getCartItems() {
       me().then(({ data: { me } }) => {
         console.log(me);
@@ -403,6 +417,12 @@ export default {
           switch (placeBookings.__typename) {
             case "Receipt":
               // redirect to success page with receipt information
+              this.SET_TOAST({
+                header: "Success",
+                isVisible: true,
+                message: "Booking successful",
+                type: "success",
+              });
               this.$router.push({
                 name: "bookings-success",
                 query: {

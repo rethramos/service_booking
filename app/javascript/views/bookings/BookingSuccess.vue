@@ -28,11 +28,14 @@
 
     <hr />
     <p class="h4">Address</p>
-    <p>{{ receipt.address.lineOne }}</p>
-    <p>{{ receipt.address.lineTwo }}</p>
-    <p>{{ receipt.address.city }} {{ receipt.address.postalCode }}</p>
-    <p>{{ receipt.address.province }}</p>
-    <p>{{ receipt.address.country }}</p>
+    <p><strong>Line One:</strong> {{ receipt.address.lineOne }}</p>
+    <p><strong>Line Two:</strong> {{ receipt.address.lineTwo }}</p>
+    <p>
+      <strong>City: </strong> {{ receipt.address.city }} (ZIP:
+      {{ receipt.address.postalCode }})
+    </p>
+    <p><strong>Province: </strong> {{ receipt.address.province }}</p>
+    <p><strong>Country:</strong> {{ receipt.address.country }}</p>
 
     <hr />
     <p class="h4">Payment Method</p>
