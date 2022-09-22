@@ -46,3 +46,31 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const ADD_TO_CART = gql`
+  mutation ($input: AddToCartInput!) {
+    addToCart(input: $input) {
+      __typename
+      ... on CartItem {
+        id
+        addon
+        appointment {
+          id
+        }
+        service {
+          id
+        }
+        slots
+      }
+      ... on Unauthenticated {
+        message
+      }
+      ... on ValidationFailed {
+        errors {
+          attribute
+          message
+        }
+      }
+    }
+  }
+`;
