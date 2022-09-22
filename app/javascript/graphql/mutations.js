@@ -96,3 +96,38 @@ export const CREATE_RECEIPT = gql`
     }
   }
 `;
+
+export const PLACE_BOOKINGS = gql`
+  mutation PlaceBookings($input: PlaceBookingsInput!) {
+    placeBookings(input: $input) {
+      __typename
+      ... on Receipt {
+        id
+        user {
+          email
+          cart {
+            cartItems {
+              id
+            }
+          }
+        }
+        bookings {
+          id
+          serviceName
+        }
+        paymentOption {
+          name
+        }
+      }
+      ... on ValidationFailed {
+        errors {
+          message
+          attribute
+        }
+      }
+      ... on Unauthenticated {
+        message
+      }
+    }
+  }
+`;

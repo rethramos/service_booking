@@ -81,3 +81,12 @@ export const SERVICE = gql`
     }
   }
 `;
+
+export const PAYMENT_OPTIONS = gql`
+  query {
+    paymentOptions {
+      id
+      name
+    }
+  }
+`;

@@ -171,15 +171,16 @@
     </div>
     <!-- Step 2 -->
     <div v-if="step === 2">
-      <form class="row g-2">
+      <form class="row g-2" @submit.prevent="submitCheckoutDetails">
+        <ErrorMessages :errors="errors" />
         <p class="h3">Payment method</p>
         <BaseSelect
           label="Payment Option"
-          :options="paymentOptions()"
+          :options="paymentOptions"
           :valueKey="'id'"
           :labelKey="'name'"
           class="form-select"
-          v-model="cartItem.appointmentId"
+          v-model="receipt.paymentOptionId"
         />
 
         <div class="form-group d-flex justify-content-end gap-2">
@@ -202,6 +203,7 @@ import BaseInput from "../../components/shared/BaseInput.vue";
 import BaseSelect from "../../components/shared/BaseSelect.vue";
 import ErrorMessages from "../../components/shared/ErrorMessages.vue";
 import addToCart from "../../graphql-requests/carts/add-to-cart";
+import paymentOptions from "../../graphql-requests/payment-options/payment-options";
 import createReceipt from "../../graphql-requests/receipts/create-receipt";
 
 export default {
@@ -220,7 +222,7 @@ export default {
   data() {
     return {
       cartItem: {
-        appointmentId: 0,
+        appointmentId: "",
         slots: 1,
         addon: "",
       },
@@ -240,8 +242,9 @@ export default {
         paymentOptionId: "",
       },
       receiptId: "",
+      paymentOptions: [],
       errors: [],
-      step: 2,
+      step: 1,
     };
   },
   computed: {
@@ -253,8 +256,10 @@ export default {
     },
   },
   methods: {
-    paymentOptions() {
-      return [];
+    getPaymentOptions() {
+      paymentOptions().then(({ data: { paymentOptions } }) => {
+        this.paymentOptions = paymentOptions;
+      });
     },
     previousStep() {
       if (this.step > 0) {
@@ -291,33 +296,27 @@ export default {
     choosePaymentOption() {
       this.nextStep();
     },
-    submitPersonalForm() {
-      this.nextStep();
-      // createReceipt(this.receipt).then(({ data: { createReceipt } }) => {
-      //   console.log(createReceipt);
-      //   switch (createReceipt.__typename) {
-      //     case "Receipt":
-      //       // transition to next step
-      //      this.handleReceipt(createReceipt)
-      //       break;
-      //     case "ValidationFailed":
-      //       const errors = createReceipt.errors.filter((e) => e.attribute !== 'paymentOption')
-      //       if (errors.length) {
-      //         this.errors = createReceipt.errors
-      //       } else {
+    submitCheckoutDetails() {
+      createReceipt(this.receipt).then(({ data: { createReceipt } }) => {
+        console.log(createReceipt);
+        switch (createReceipt.__typename) {
+          case "Receipt":
+            // transition to next step
+            this.handleReceipt(createReceipt);
+            break;
+          case "ValidationFailed":
+            this.errors = createReceipt.errors;
+            break;
 
-      //       }
-      //       break;
+          case "Unauthenticated":
+            this.handleUnauthenticated();
+            break;
 
-      //     case "Unauthenticated":
-      //       this.handleUnauthenticated();
-      //       break;
-
-      //     default:
-      //       this.showDefaultError();
-      //       break;
-      //   }
-      // });
+          default:
+            this.showDefaultError();
+            break;
+        }
+      });
     },
     handleReceipt(newReceipt) {
       this.receiptId = newReceipt.id;
@@ -335,6 +334,9 @@ export default {
         type: "danger",
       });
     },
+  },
+  created() {
+    this.getPaymentOptions();
   },
 };
 </script>
