@@ -11,7 +11,7 @@ module Mutations
 
     argument :first_name, String, required: true
     argument :last_name, String, required: true
-    argument :timezone, String, required: true, default_value: 'UTC'
+    argument :timezone, String, required: false, default_value: 'UTC'
     argument :auth_provider, Types::AuthProviderSignupData, required: true
 
     type Types::User::CreateUserResultType, null: false

@@ -10,7 +10,7 @@ module Types
         Types::ReceiptType
       elsif object.is_a? ActiveModel::Errors
         Types::Core::ValidationFailedType
-      else
+      elsif object == :unauthenticated
         Types::Auth::UnauthenticatedType
       end
     end

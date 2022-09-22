@@ -4,6 +4,7 @@
     <form @submit.prevent="register" class="row g-2">
       <ErrorMessages :errors="errors" />
       <BaseInput
+        required
         label="First Name"
         type="text"
         name="user[first_name]"
@@ -12,6 +13,7 @@
         v-model="user.firstName"
       />
       <BaseInput
+        required
         label="Last Name"
         type="text"
         name="user[last_name]"
@@ -20,20 +22,13 @@
         v-model="user.lastName"
       />
       <BaseInput
-        label="Timezone"
-        type="text"
-        name="user[timezone]"
-        id="user_timezone"
-        class="form-control"
-        v-model="user.timezone"
-      />
-      <BaseInput
         label="Email"
         type="email"
         name="user[email]"
         id="user_email"
         class="form-control"
         v-model="user.email"
+        required
       />
       <BaseInput
         label="Password"
@@ -42,6 +37,7 @@
         id="user_password"
         class="form-control"
         v-model="user.password"
+        required
       />
       <BaseInput
         label="Password Confirmation"
@@ -50,9 +46,10 @@
         id="user_password_confirmation"
         class="form-control"
         v-model="user.passwordConfirmation"
+        required
       />
       <div class="form-group">
-        <button type="submit" class="btn btn-primary w-100">Register</button>
+        <BaseButton type="submit" class="btn-primary w-100">Register</BaseButton>
       </div>
     </form>
   </BaseCard>
@@ -61,6 +58,7 @@
 import { mapActions, mapMutations } from "vuex";
 import BaseCard from "../components/shared/BaseCard.vue";
 import BaseInput from "../components/shared/BaseInput.vue";
+import BaseButton from "../components/shared/BaseButton.vue";
 import ErrorMessages from "../components/shared/ErrorMessages.vue";
 
 export default {
@@ -70,7 +68,6 @@ export default {
         firstName: "",
         lastName: "",
         email: "",
-        timezone: "",
         password: "",
         passwordConfirmation: "",
       },
@@ -96,7 +93,7 @@ export default {
       });
     },
   },
-  components: { BaseCard, BaseInput, ErrorMessages },
+  components: { BaseCard, BaseInput, ErrorMessages, BaseButton },
 };
 </script>
 <style lang=""></style>

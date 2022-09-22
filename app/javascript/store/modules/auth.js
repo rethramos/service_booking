@@ -34,7 +34,7 @@ export const actions = {
   },
   createUser(
     { commit },
-    { firstName, lastName, timezone, email, password, passwordConfirmation }
+    { firstName, lastName, email, password, passwordConfirmation }
   ) {
     return apolloClient
       .mutate({
@@ -43,7 +43,6 @@ export const actions = {
           input: {
             firstName,
             lastName,
-            timezone,
             authProvider: {
               credentials: {
                 email,
