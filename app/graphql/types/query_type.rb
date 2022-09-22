@@ -16,6 +16,9 @@ module Types
       argument :id, ID, required: true
     end
     field :payment_options, [Types::PaymentOptionType], null: false
+    field :receipt, Types::ReceiptType do
+      argument :id, ID, required: true
+    end
 
     def me
       if context[:logged_in]
@@ -48,6 +51,12 @@ module Types
 
     def payment_options
       PaymentOption.all
+    end
+
+    def receipt(id: 0)
+      ::Receipt.find(id)
+    rescue ActiveRecord::RecordNotFound
+      nil
     end
   end
 end

@@ -110,3 +110,39 @@ export const PAYMENT_OPTIONS = gql`
     }
   }
 `;
+
+export const RECEIPT = gql`
+  query Receipt($id: ID!) {
+    receipt(id: $id) {
+      id
+      firstName
+      lastName
+      contactNumber
+      email
+      paymentOption {
+        id
+        name
+      }
+      address {
+        lineOne
+        lineTwo
+        city
+        province
+        country
+        postalCode
+      }
+      bookings {
+        id
+        serviceName
+        serviceAppointment
+        serviceCurrency
+        serviceUnitPrice
+        slots
+        bookingStatus {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
