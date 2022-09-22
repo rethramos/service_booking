@@ -7,15 +7,15 @@
         style="width: 100px; height: 100px; object-fit: cover"
       />
     </RouterLink>
-    <div>
+    <div style="min-width:0;">
       <p v-if="service.serviceCategory" class="text-uppercase mb-1">
         {{ service.serviceCategory.name }}
       </p>
       <RouterLink :to="{ name: 'services-show', params: { id: service.id } }">
-        <p class="h3">{{ service.name }}</p>
+        <p class="h3 text-truncate">{{ service.name }}</p>
       </RouterLink>
       <p>{{ service.business.name }}</p>
-      <p>{{ service.description }}</p>
+      <p class="text-truncate">{{ service.description }}</p>
     </div>
   </BaseCard>
 </template>
