@@ -15,6 +15,10 @@ module Types
     field :service, Types::ServiceType do
       argument :id, ID, required: true
     end
+    field :payment_options, [Types::PaymentOptionType], null: false
+    field :receipt, Types::ReceiptType do
+      argument :id, ID, required: true
+    end
 
     def me
       if context[:logged_in]
@@ -39,8 +43,18 @@ module Types
       relation
     end
 
-    def service(id:0)
+    def service(id: 0)
       ::Service.find(id)
+    rescue ActiveRecord::RecordNotFound
+      nil
+    end
+
+    def payment_options
+      PaymentOption.all
+    end
+
+    def receipt(id: 0)
+      ::Receipt.find(id)
     rescue ActiveRecord::RecordNotFound
       nil
     end
