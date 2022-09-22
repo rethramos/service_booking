@@ -198,23 +198,39 @@
 
     <!-- Step 3 -->
     <div v-if="step === 3">
-      <form class="row g-2" @submit.prevent="">
+      <form class="row g-2" @submit.prevent="confirmBooking">
         <ErrorMessages :errors="errors" />
         <p class="h3">Checkout</p>
         <p class="h4">Service Information</p>
         <!-- loop through each item in the cart -->
-        <p>service name x1</p>
-        <p>appointment</p>
-        <p>store details</p>
-        <p>subtotal: price * slots</p>
+        <ul class="d-flex flex-column gap-4" v-if="cartItems.length">
+          <li v-for="i in cartItems" :key="i.id">
+            <BaseCard class="card-body">
+              <strong>{{ i.service.name }} (x {{ i.slots }})</strong>
+              <p>{{ new Date(i.appointment.timeslot).toString() }}</p>
+              <p><strong>Store:</strong> {{ i.service.business.name }}</p>
+              <p>
+                <strong>Subtotal:</strong> {{ i.service.currency }}
+                {{ i.service.unitPrice * i.slots }}
+              </p>
+              <div v-if="i.addon">
+                <strong>Add-on:</strong>
+                <p>{{ i.addon }}</p>
+              </div>
+            </BaseCard>
+          </li>
+        </ul>
 
         <p class="h4">Account Details</p>
-        <p><strong>Name:</strong> {{ receipt.firstName }} {{ receipt.lastName }}</p>
+        <p>
+          <strong>Name:</strong> {{ receipt.firstName }} {{ receipt.lastName }}
+        </p>
         <p><strong>Contact Number: </strong> {{ receipt.contactNumber }}</p>
         <p><strong>Email: </strong> {{ receipt.email }}</p>
 
         <p class="h4">Payment Method</p>
         <p>{{ selectedPaymentOption.name }}</p>
+
         <div class="form-group d-flex justify-content-end gap-2">
           <BaseButton
             type="button"
@@ -224,7 +240,7 @@
             Back
           </BaseButton>
           <BaseButton type="submit" class="btn-primary"
-            >Confirm Booking</BaseButton
+            >Confirm Booking(s)</BaseButton
           >
         </div>
       </form>
@@ -232,6 +248,7 @@
   </section>
 </template>
 <script>
+import BaseCard from "../../components/shared/BaseCard.vue";
 import BaseButton from "../../components/shared/BaseButton.vue";
 import BaseInput from "../../components/shared/BaseInput.vue";
 import BaseSelect from "../../components/shared/BaseSelect.vue";
@@ -239,9 +256,12 @@ import ErrorMessages from "../../components/shared/ErrorMessages.vue";
 import addToCart from "../../graphql-requests/carts/add-to-cart";
 import paymentOptions from "../../graphql-requests/payment-options/payment-options";
 import createReceipt from "../../graphql-requests/receipts/create-receipt";
+import placeBookings from "../../graphql-requests/bookings/place-bookings";
+import me from "../../graphql-requests/user/me";
 
 export default {
   components: {
+    BaseCard,
     BaseSelect,
     BaseInput,
     BaseButton,
@@ -279,6 +299,7 @@ export default {
       paymentOptions: [],
       errors: [],
       step: 0,
+      cartItems: [],
     };
   },
   computed: {
@@ -295,6 +316,24 @@ export default {
     },
   },
   methods: {
+    getCartItems() {
+      me().then(({ data: { me } }) => {
+        console.log(me);
+        switch (me.__typename) {
+          case "User":
+            this.cartItems = me.cart.cartItems;
+            break;
+
+          case "Unauthenticated":
+            this.handleUnauthenticated();
+            break;
+
+          default:
+            this.showDefaultError();
+            break;
+        }
+      });
+    },
     getPaymentOptions() {
       paymentOptions().then(({ data: { paymentOptions } }) => {
         this.paymentOptions = paymentOptions;
@@ -357,10 +396,35 @@ export default {
         }
       });
     },
+    confirmBooking() {
+      placeBookings({ receiptId: this.receiptId }).then(
+        ({ data: { placeBookings } }) => {
+          console.log(placeBookings);
+          switch (placeBookings.__typename) {
+            case "Receipt":
+              // redirect to success page with receipt information
+              this.$router.push({ name: "home" });
+              break;
+            case "ValidationFailed":
+              this.errors = placeBookings.errors;
+              break;
+
+            case "Unauthenticated":
+              this.handleUnauthenticated();
+              break;
+
+            default:
+              this.showDefaultError();
+              break;
+          }
+        }
+      );
+    },
     handleReceipt(newReceipt) {
       this.receiptId = newReceipt.id;
       this.nextStep();
       this.errors = [];
+      this.getCartItems();
     },
     handleUnauthenticated() {
       this.$router.push({ name: "login" });
