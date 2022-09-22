@@ -58,7 +58,7 @@
     </div>
     <!-- Step 1 -->
     <div v-if="step === 1">
-      <form class="row g-2">
+      <form class="row g-2" @submit.prevent="choosePaymentOption">
         <ErrorMessages :errors="errors" />
         <p class="h3">Account Details</p>
         <BaseInput
@@ -68,6 +68,7 @@
           id="receipt_first_name"
           class="form-control"
           v-model="receipt.firstName"
+          required
         />
         <BaseInput
           label="Last Name"
@@ -76,14 +77,16 @@
           id="receipt_last_name"
           class="form-control"
           v-model="receipt.lastName"
+          required
         />
         <BaseInput
           label="Contact Number"
-          type="text"
+          type="tel"
           name="receipt[contact_number]"
           id="receipt_contact_number"
           class="form-control"
           v-model="receipt.contactNumber"
+          required
         />
         <BaseInput
           label="Email"
@@ -92,6 +95,7 @@
           id="receipt_email"
           class="form-control"
           v-model="receipt.email"
+          required
         />
 
         <p class="h3">Complete Address</p>
@@ -102,6 +106,7 @@
           id="receipt_address_line_one"
           class="form-control"
           v-model="receipt.address.lineOne"
+          required
         />
         <BaseInput
           label="Line 2"
@@ -110,6 +115,7 @@
           id="receipt_address_line_two"
           class="form-control"
           v-model="receipt.address.lineTwo"
+          required
         />
 
         <BaseInput
@@ -119,6 +125,7 @@
           id="receipt_address_city"
           class="form-control"
           v-model="receipt.address.city"
+          required
         />
         <BaseInput
           label="Province"
@@ -127,6 +134,7 @@
           id="receipt_address_province"
           class="form-control"
           v-model="receipt.address.province"
+          required
         />
         <BaseInput
           label="Country"
@@ -135,6 +143,7 @@
           id="receipt_address_country"
           class="form-control"
           v-model="receipt.address.country"
+          required
         />
         <BaseInput
           label="Postal Code"
@@ -143,10 +152,45 @@
           id="receipt_address_postal_code"
           class="form-control"
           v-model="receipt.address.postalCode"
+          required
         />
 
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary w-100">Checkout</button>
+        <div class="form-group d-flex justify-content-end gap-2">
+          <BaseButton
+            type="button"
+            class="btn-secondary"
+            @click="this.previousStep"
+          >
+            Back
+          </BaseButton>
+          <BaseButton type="submit" class="btn-primary">
+            Choose payment option
+          </BaseButton>
+        </div>
+      </form>
+    </div>
+    <!-- Step 2 -->
+    <div v-if="step === 2">
+      <form class="row g-2">
+        <p class="h3">Payment method</p>
+        <BaseSelect
+          label="Payment Option"
+          :options="paymentOptions()"
+          :valueKey="'id'"
+          :labelKey="'name'"
+          class="form-select"
+          v-model="cartItem.appointmentId"
+        />
+
+        <div class="form-group d-flex justify-content-end gap-2">
+          <BaseButton
+            type="button"
+            class="btn-secondary"
+            @click="this.previousStep"
+          >
+            Back
+          </BaseButton>
+          <BaseButton type="submit" class="btn-primary">Checkout</BaseButton>
         </div>
       </form>
     </div>
@@ -158,6 +202,7 @@ import BaseInput from "../../components/shared/BaseInput.vue";
 import BaseSelect from "../../components/shared/BaseSelect.vue";
 import ErrorMessages from "../../components/shared/ErrorMessages.vue";
 import addToCart from "../../graphql-requests/carts/add-to-cart";
+import createReceipt from "../../graphql-requests/receipts/create-receipt";
 
 export default {
   components: {
@@ -192,9 +237,11 @@ export default {
           postalCode: "",
           country: "",
         },
+        paymentOptionId: "",
       },
+      receiptId: "",
       errors: [],
-      step: 0,
+      step: 2,
     };
   },
   computed: {
@@ -206,6 +253,14 @@ export default {
     },
   },
   methods: {
+    paymentOptions() {
+      return [];
+    },
+    previousStep() {
+      if (this.step > 0) {
+        this.step--;
+      }
+    },
     nextStep() {
       this.step++;
     },
@@ -223,20 +278,62 @@ export default {
               break;
 
             case "Unauthenticated":
-              this.$router.push({ name: "login" });
+              this.handleUnauthenticated();
+              break;
 
             default:
-              this.SET_TOAST({
-                header: "Error",
-                isVisible: true,
-                message: `Something went wrong.`,
-                type: "danger",
-              });
-
+              this.showDefaultError();
               break;
           }
         }
       );
+    },
+    choosePaymentOption() {
+      this.nextStep();
+    },
+    submitPersonalForm() {
+      this.nextStep();
+      // createReceipt(this.receipt).then(({ data: { createReceipt } }) => {
+      //   console.log(createReceipt);
+      //   switch (createReceipt.__typename) {
+      //     case "Receipt":
+      //       // transition to next step
+      //      this.handleReceipt(createReceipt)
+      //       break;
+      //     case "ValidationFailed":
+      //       const errors = createReceipt.errors.filter((e) => e.attribute !== 'paymentOption')
+      //       if (errors.length) {
+      //         this.errors = createReceipt.errors
+      //       } else {
+
+      //       }
+      //       break;
+
+      //     case "Unauthenticated":
+      //       this.handleUnauthenticated();
+      //       break;
+
+      //     default:
+      //       this.showDefaultError();
+      //       break;
+      //   }
+      // });
+    },
+    handleReceipt(newReceipt) {
+      this.receiptId = newReceipt.id;
+      this.nextStep();
+      this.errors = [];
+    },
+    handleUnauthenticated() {
+      this.$router.push({ name: "login" });
+    },
+    showDefaultError() {
+      this.SET_TOAST({
+        header: "Error",
+        isVisible: true,
+        message: `Something went wrong.`,
+        type: "danger",
+      });
     },
   },
 };
