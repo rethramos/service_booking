@@ -26,7 +26,7 @@ class CartItem < ApplicationRecord
     sum_taken = service.bookings.where(service_appointment: appointment.timeslot).sum(:slots)
     max_slots = appointment.max_slots
 
-    if sum_taken + slots > appointment.max_slots
+    if sum_taken + slots > max_slots
       message = 'must not exceed the remaining slots'
       errors.add :slots, message
     end

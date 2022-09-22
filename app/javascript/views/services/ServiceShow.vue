@@ -35,7 +35,7 @@
         />
         <BaseInput
           type="number"
-          :label="'Slots (0 remaining)'"
+          :label="slotLabel"
           id="cart_item_slots"
           min="1"
           v-model.number="cartItem.slots"
@@ -316,6 +316,17 @@ export default {
     };
   },
   computed: {
+    selectedAppointment() {
+      return this.service.appointments.find(
+        (s) => s.id == this.cartItem.appointmentId
+      );
+    },
+    slotLabel() {
+      const str = "Slots";
+      return this.selectedAppointment
+        ? str + ` (${this.selectedAppointment.remainingSlots} remaining)`
+        : str;
+    },
     formattedAppointments() {
       return this.service.appointments.map((a) => ({
         ...a,

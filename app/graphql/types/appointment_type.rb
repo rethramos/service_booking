@@ -11,7 +11,7 @@ module Types
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 
     def remaining_slots
-      object.service.bookings.where(service_appointment: object.timeslot).sum(:slots)
+      object.max_slots - object.service.bookings.where(service_appointment: object.timeslot).sum(:slots)
     end
   end
 end
