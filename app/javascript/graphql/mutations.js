@@ -107,8 +107,10 @@ export const PLACE_BOOKINGS = gql`
       ... on Receipt {
         id
         user {
+          id
           email
           cart {
+            id
             cartItems {
               id
             }
