@@ -1,0 +1,30 @@
+<h1>Bookings</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Customer Name</th>
+      <th>Booked at</th>
+      <th>Service</th>
+      <th>Appointment</th>
+      <th>Slots</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @bookings.each do |booking| %>
+      <tr>
+        <th><%= booking.id %></th>
+        <td><%= booking.receipt.first_name %> <%= booking.receipt.last_name%></td>
+        <td><%= booking.created_at %></td>
+        <td><%= booking.service_name %></td>
+        <td><%= booking.service_appointment %></td>
+        <td><%= booking.slots %></td>
+        <td><%= booking.booking_status.name %></td>
+        <td><%= link_to 'Edit Status', edit_admin_booking_path(booking) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     end
     resources :service_categories, only: %i[edit update destroy]
     resources :appointments, only: %i[new create edit update destroy]
+    resources :bookings, only: [:index, :edit, :update]
   end
 
   # Defines the root path route ("/")
