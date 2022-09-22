@@ -48,7 +48,7 @@ class CartItemTest < ActiveSupport::TestCase
     assert_not @cart_item.valid?
   end
 
-  test 'slots should be less than or greater than the maximum' do
+  test 'slots should not exceed the maximum' do
     max = @cart_item.appointment.max_slots
     @cart_item.slots = max + 1
     assert_not @cart_item.valid?

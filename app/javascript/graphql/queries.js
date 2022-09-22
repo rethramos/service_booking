@@ -62,6 +62,7 @@ export const SERVICE_SEARCH = gql`
           id
           timeslot
           maxSlots
+          remainingSlots
         }
         business {
           id
@@ -89,6 +90,7 @@ export const SERVICE = gql`
         id
         timeslot
         maxSlots
+        remainingSlots
       }
       business {
         id

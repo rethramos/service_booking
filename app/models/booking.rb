@@ -11,7 +11,7 @@ class Booking < ApplicationRecord
   validates :service_currency, presence: true, length: { maximum: 3 }
   validates :slots, presence: true, numericality: { greater_than: 0 }
   validates :addon, length: { maximum: 300 }
-  validate :free_slots, unless: proc { |b| b.service.nil? || b.service_appointment.blank? }
+  validate :free_slots, unless: proc { |b| b.service.nil? || b.service_appointment.blank? || b.slots.blank? }
 
   private
 
@@ -23,6 +23,9 @@ class Booking < ApplicationRecord
     sum_taken = service.bookings.where(service_appointment:).sum(:slots)
     max_slots = service.appointments.find_by(timeslot: service_appointment).max_slots
 
-    errors.add :service_appointment, 'is already fully booked' if sum_taken >= max_slots
+    if sum_taken + slots > max_slots
+      message = 'must not exceed the remaining slots'
+      errors.add :slots, message
+    end
   end
 end
