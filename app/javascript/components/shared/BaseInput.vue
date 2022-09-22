@@ -1,6 +1,9 @@
 <template>
   <div class="form-group">
-    <label v-if="label" :for="$attrs.id">{{ label }}</label>
+    <label v-if="label" :for="$attrs.id">
+      {{ label }}
+      <span v-if="'required' in $attrs" class="text-danger">*</span>
+    </label>
     <input :value="modelValue" @input="updateValue" v-bind="$attrs" />
   </div>
 </template>

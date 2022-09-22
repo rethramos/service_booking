@@ -1,6 +1,9 @@
 <template>
   <div class="form-group">
-    <label v-if="label" :for="$attrs.id">{{ label }}</label>
+    <label v-if="label" :for="$attrs.id">
+      {{ label }}
+      <span v-if="'required' in $attrs" class="text-danger">*</span>
+    </label>
     <select :value="modelValue" @change="updateValue" v-bind="$attrs">
       <option value="" disabled>Select...</option>
       <!-- Only supports an array of objects for now -->
@@ -20,7 +23,7 @@ export default {
   props: {
     label: {
       type: String,
-      default: '',
+      default: "",
     },
     modelValue: {
       type: [String, Number],
@@ -36,12 +39,12 @@ export default {
       type: String,
     },
   },
-  emits: ['update:modelValue'],
+  emits: ["update:modelValue"],
   methods: {
     updateValue(event) {
-      this.$emit('update:modelValue', event.target.value)
+      this.$emit("update:modelValue", event.target.value);
     },
   },
-}
+};
 </script>
 <style></style>
