@@ -53,6 +53,9 @@ export const ADD_TO_CART = gql`
       __typename
       ... on CartItem {
         id
+        cart {
+          id
+        }
         addon
         appointment {
           id
