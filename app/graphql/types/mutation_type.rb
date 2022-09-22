@@ -1,5 +1,6 @@
 module Types
   class MutationType < Types::BaseObject
+    field :create_receipt, mutation: Mutations::CreateReceipt
     field :add_to_cart, mutation: Mutations::AddToCart
     field :login_user, mutation: Mutations::LoginUser
     field :create_user, mutation: Mutations::CreateUser
