@@ -35,7 +35,7 @@
         />
         <BaseInput
           type="number"
-          label="Slots"
+          :label="'Slots (0 remaining)'"
           id="cart_item_slots"
           min="1"
           v-model.number="cartItem.slots"
