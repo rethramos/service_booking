@@ -20,5 +20,39 @@
     <% end %>
   </tbody>
 </table>
-
-<h2>Bookings</h2>
+<h2>Booking Overview</h2>
+<div class="row row-cols-1 row-cols-md-3 g-2">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <p class="h3"><%= @served_bookings %></p>
+        <p>served</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <p class="h3"><%= @cancelled_bookings %></p>
+        <p>cancelled</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <p class="h3"><%= @pending_bookings %></p>
+        <p>pending</p>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<h2>Most booked services</h2>
+<div class="mt-4 d-flex flex-column gap-4">
+  <% @most_booked_services.each do |stat| %>
+    <%= render 'admin/services/service', service: stat[:service] do %>
+      <p class="mt-2">Count: <%= stat[:count] %></p>
+    <% end %>
+  <% end %>
+</div>
