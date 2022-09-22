@@ -58,9 +58,9 @@
     </div>
     <!-- Step 1 -->
     <div v-if="step === 1">
-      <p class="h3">Account Details</p>
       <form class="row g-2">
         <ErrorMessages :errors="errors" />
+        <p class="h3">Account Details</p>
         <BaseInput
           label="First Name"
           type="text"
@@ -93,6 +93,58 @@
           class="form-control"
           v-model="receipt.email"
         />
+
+        <p class="h3">Complete Address</p>
+        <BaseInput
+          label="Line 1"
+          type="text"
+          name="receipt[address][line_one]"
+          id="receipt_address_line_one"
+          class="form-control"
+          v-model="receipt.address.lineOne"
+        />
+        <BaseInput
+          label="Line 2"
+          type="text"
+          name="receipt[address][line_two]"
+          id="receipt_address_line_two"
+          class="form-control"
+          v-model="receipt.address.lineTwo"
+        />
+
+        <BaseInput
+          label="City"
+          type="text"
+          name="receipt[address][city]"
+          id="receipt_address_city"
+          class="form-control"
+          v-model="receipt.address.city"
+        />
+        <BaseInput
+          label="Province"
+          type="text"
+          name="receipt[address][province]"
+          id="receipt_address_province"
+          class="form-control"
+          v-model="receipt.address.province"
+        />
+        <BaseInput
+          label="Country"
+          type="text"
+          name="receipt[address][country]"
+          id="receipt_address_country"
+          class="form-control"
+          v-model="receipt.address.country"
+        />
+        <BaseInput
+          label="Postal Code"
+          type="number"
+          name="receipt[address][postal_code]"
+          id="receipt_address_postal_code"
+          class="form-control"
+          v-model="receipt.address.postalCode"
+        />
+
         <div class="form-group">
           <button type="submit" class="btn btn-primary w-100">Checkout</button>
         </div>
@@ -163,8 +215,6 @@ export default {
           console.log(addToCart);
           switch (addToCart.__typename) {
             case "CartItem":
-              // transition to next form
-              console.log(addToCart);
               this.errors = [];
               this.nextStep();
               break;
