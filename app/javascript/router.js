@@ -4,6 +4,7 @@ import RegisterPage from "./views/RegisterPage.vue";
 import LoginPage from "./views/LoginPage.vue";
 import NotFound from "./views/NotFound.vue";
 import ServiceShow from "./views/services/ServiceShow.vue";
+import BookingSuccess from "./views/bookings/BookingSuccess.vue";
 import nProgress from "nprogress";
 import store from "./store/store";
 
@@ -33,6 +34,12 @@ const router = createRouter({
       },
     },
     {
+      path: "/bookings/success",
+      name: "bookings-success",
+      component: BookingSuccess,
+      props: (route) => ({ receiptId: route.query.receiptId }),
+    },
+    {
       path: "/404",
       name: "404",
       component: NotFound,
@@ -51,12 +58,12 @@ router.beforeEach((to, from, next) => {
 });
 
 router.beforeResolve((to) => {
-  if (to.meta.requiresAuth && !store.getters['auth/isLoggedIn']) {
+  if (to.meta.requiresAuth && !store.getters["auth/isLoggedIn"]) {
     return {
-      name: 'login',
-    }
+      name: "login",
+    };
   }
-})
+});
 
 router.afterEach(() => {
   nProgress.done();

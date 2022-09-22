@@ -403,7 +403,12 @@ export default {
           switch (placeBookings.__typename) {
             case "Receipt":
               // redirect to success page with receipt information
-              this.$router.push({ name: "home" });
+              this.$router.push({
+                name: "bookings-success",
+                query: {
+                  receiptId: placeBookings.id,
+                },
+              });
               break;
             case "ValidationFailed":
               this.errors = placeBookings.errors;
