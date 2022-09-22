@@ -270,7 +270,7 @@ import paymentOptions from "../../graphql-requests/payment-options/payment-optio
 import createReceipt from "../../graphql-requests/receipts/create-receipt";
 import placeBookings from "../../graphql-requests/bookings/place-bookings";
 import me from "../../graphql-requests/user/me";
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
 
 export default {
   components: {
@@ -316,6 +316,7 @@ export default {
     };
   },
   computed: {
+    ...mapState("auth", ["currentUser"]),
     selectedAppointment() {
       return this.service.appointments.find(
         (s) => s.id == this.cartItem.appointmentId

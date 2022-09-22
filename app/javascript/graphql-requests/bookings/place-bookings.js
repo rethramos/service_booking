@@ -9,5 +9,22 @@ export default function placeBookings({ receiptId }) {
         receiptId,
       },
     },
+    update: (cache, { data: { placeBookings } }) => {
+      if (placeBookings.__typename !== "Receipt") {
+        return;
+      }
+
+      // update user.cart with the new cart ref/id
+      const userCacheId = `User:${placeBookings.user.id}`;
+
+      cache.modify({
+        id: userCacheId,
+        fields: {
+          cart(existingCart = {}, { toReference }) {
+            return toReference(placeBookings.user.cart);
+          },
+        },
+      });
+    },
   });
 }

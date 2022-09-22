@@ -12,5 +12,29 @@ export default function addToCart({ serviceId, appointmentId, addon, slots }) {
         slots,
       },
     },
+    update: (cache, { data: { addToCart } }) => {
+      if (addToCart.__typename !== "CartItem") {
+        return;
+      }
+
+      const cartId = `Cart:${addToCart.cart.id}`;
+
+      cache.modify({
+        id: cartId,
+        fields: {
+          cartItems(existingCartItems = [], { readField, toReference }) {
+            if (
+              existingCartItems.some((ref) => {
+                return readField("id", ref) == addToCart.id;
+              })
+            ) {
+              return existingCartItems;
+            }
+
+            return [...existingCartItems, toReference(addToCart)];
+          },
+        },
+      });
+    },
   });
 }
