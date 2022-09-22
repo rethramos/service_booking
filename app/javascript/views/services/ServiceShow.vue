@@ -195,6 +195,40 @@
         </div>
       </form>
     </div>
+
+    <!-- Step 3 -->
+    <div v-if="step === 3">
+      <form class="row g-2" @submit.prevent="">
+        <ErrorMessages :errors="errors" />
+        <p class="h3">Checkout</p>
+        <p class="h4">Service Information</p>
+        <!-- loop through each item in the cart -->
+        <p>service name x1</p>
+        <p>appointment</p>
+        <p>store details</p>
+        <p>subtotal: price * slots</p>
+
+        <p class="h4">Account Details</p>
+        <p><strong>Name:</strong> {{ receipt.firstName }} {{ receipt.lastName }}</p>
+        <p><strong>Contact Number: </strong> {{ receipt.contactNumber }}</p>
+        <p><strong>Email: </strong> {{ receipt.email }}</p>
+
+        <p class="h4">Payment Method</p>
+        <p>{{ selectedPaymentOption.name }}</p>
+        <div class="form-group d-flex justify-content-end gap-2">
+          <BaseButton
+            type="button"
+            class="btn-secondary"
+            @click="this.previousStep"
+          >
+            Back
+          </BaseButton>
+          <BaseButton type="submit" class="btn-primary"
+            >Confirm Booking</BaseButton
+          >
+        </div>
+      </form>
+    </div>
   </section>
 </template>
 <script>
@@ -244,7 +278,7 @@ export default {
       receiptId: "",
       paymentOptions: [],
       errors: [],
-      step: 1,
+      step: 0,
     };
   },
   computed: {
@@ -253,6 +287,11 @@ export default {
         ...a,
         timeslot: new Date(a.timeslot).toString(),
       }));
+    },
+    selectedPaymentOption() {
+      return this.paymentOptions.find(
+        (p) => p.id == this.receipt.paymentOptionId
+      );
     },
   },
   methods: {
