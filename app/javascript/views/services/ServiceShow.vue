@@ -16,6 +16,10 @@
             Category: {{ service.serviceCategory.name }}
           </p>
           <p>Store: {{ service.business.name }}</p>
+          <p v-if="service.business.formattedAddress">
+            Address: {{ service.business.formattedAddress }}
+          </p>
+          <p v-else>No adress specified</p>
         </div>
       </div>
       <br />
@@ -201,7 +205,7 @@
       <form class="row g-2" @submit.prevent="confirmBooking">
         <ErrorMessages :errors="errors" />
         <p class="h3">Checkout</p>
-        <p class="h4">Service Information</p>
+        <p class="h4">Your cart</p>
         <!-- loop through each item in the cart -->
         <ul class="d-flex flex-column gap-4" v-if="cartItems.length">
           <li v-for="i in cartItems" :key="i.id">

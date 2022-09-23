@@ -67,6 +67,7 @@ export const SERVICE_SEARCH = gql`
         business {
           id
           name
+          formattedAddress
         }
         serviceCategory {
           id
@@ -95,6 +96,7 @@ export const SERVICE = gql`
       business {
         id
         name
+        formattedAddress
       }
       serviceCategory {
         id
