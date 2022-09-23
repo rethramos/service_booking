@@ -16,22 +16,25 @@
       </div>
     </form>
     <br />
-    <ul class="d-flex flex-column gap-4">
+    <ul v-if="services.length" class="d-flex flex-column gap-4">
       <li v-for="service in services" :key="service.id">
         <ServiceSearchCard :service="service" />
       </li>
     </ul>
+    <EmptyContent v-else />
   </div>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
 import ServiceSearchCard from "../components/service/ServiceSearchCard.vue";
 import BaseButton from "../components/shared/BaseButton.vue";
+import EmptyContent from "../components/shared/EmptyContent.vue";
 
 export default {
   components: {
     BaseButton,
     ServiceSearchCard,
+    EmptyContent
   },
   data() {
     return {
@@ -44,7 +47,6 @@ export default {
   methods: {
     ...mapActions("service", ["searchServices"]),
     search() {
-      console.log(this.q);
       this.searchServices({ q: this.q });
     },
   },

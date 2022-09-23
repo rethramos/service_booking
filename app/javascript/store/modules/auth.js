@@ -21,7 +21,6 @@ export const actions = {
     } = await apolloClient.query({
       query: ME,
     });
-    console.log(me);
     switch (me.__typename) {
       case "User":
         commit("SET_CURRENT_USER", me);
