@@ -37,6 +37,28 @@ export const LOGIN_USER = gql`
           lastName
           admin
           timezone
+          cart {
+            id
+            cartItems {
+              id
+              addon
+              appointment {
+                id
+                timeslot
+              }
+              service {
+                id
+                name
+                business {
+                  id
+                  name
+                }
+                unitPrice
+                currency
+              }
+              slots
+            }
+          }
         }
       }
 

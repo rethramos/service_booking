@@ -15,6 +15,7 @@ class GraphqlController < ApplicationController
       logged_in: logged_in?,
       session: session
     }
+    puts '----CONTEXT', context
     result = ServiceBookingSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
   rescue StandardError => e
