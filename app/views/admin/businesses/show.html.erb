@@ -1,4 +1,13 @@
 <h1><%= @business.name %></h1>
+<% if @business.address %>
+  <h2>Address</h2>
+  <p><strong>Line 1:</strong> <%= @business.address.line_one %></p>
+  <p><strong>Line 2:</strong> <%= @business.address.line_two %></p>
+  <p><strong>City:</strong> <%= @business.address.city %></p>
+  <p><strong>Province:</strong> <%= @business.address.province %></p>
+  <p><strong>Country:</strong> <%= @business.address.country %></p>
+  <p><strong>Postal Code:</strong> <%= @business.address.postal_code %></p>
+<% end %>
 <h2>Categories (<%=  @service_categories.count %>)</h2>
 <%= link_to 'New Category', new_admin_business_service_category_path(@business) %>
 <ul class="mt-4 row row-cols-1 row-cols-md-2 row-cols-lg-4 g-2">
