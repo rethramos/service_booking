@@ -12,6 +12,28 @@ export const CREATE_USER = gql`
           email
           admin
           timezone
+          cart {
+            id
+            cartItems {
+              id
+              addon
+              appointment {
+                id
+                timeslot
+              }
+              service {
+                id
+                name
+                business {
+                  id
+                  name
+                }
+                unitPrice
+                currency
+              }
+              slots
+            }
+          }
         }
       }
 

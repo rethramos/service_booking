@@ -126,6 +126,7 @@ export const RECEIPT = gql`
         name
       }
       address {
+        id
         lineOne
         lineTwo
         city

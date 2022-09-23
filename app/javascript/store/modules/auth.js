@@ -21,7 +21,7 @@ export const actions = {
     } = await apolloClient.query({
       query: ME,
     });
-    console.log(me)
+    console.log(me);
     switch (me.__typename) {
       case "User":
         commit("SET_CURRENT_USER", me);
@@ -53,6 +53,19 @@ export const actions = {
             },
           },
         },
+        update: (cache, { data: { createUser } }) => {
+          if (createUser.__typename !== "CreateUserPayload") {
+            return;
+          }
+
+          cache.modify({
+            fields: {
+              me(existingMe = {}, { toReference }) {
+                return toReference(createUser.user);
+              },
+            },
+          });
+        },
       })
       .then(({ data: { createUser } }) => {
         if (createUser.__typename === "CreateUserPayload") {
@@ -73,19 +86,19 @@ export const actions = {
             },
           },
         },
-        update: (cache, {data: {loginUser}}) => {
-          if (loginUser.__typename !== 'LoginUserPayload') {
-            return
+        update: (cache, { data: { loginUser } }) => {
+          if (loginUser.__typename !== "LoginUserPayload") {
+            return;
           }
 
           cache.modify({
             fields: {
-              me(existingMe = {}, {toReference}) {
-                return toReference(loginUser.user)
-              }
-            }
-          })
-        }
+              me(existingMe = {}, { toReference }) {
+                return toReference(loginUser.user);
+              },
+            },
+          });
+        },
       })
       .then(({ data: { loginUser } }) => {
         if (loginUser.__typename === "LoginUserPayload") {
