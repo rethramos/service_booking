@@ -52,7 +52,7 @@
 <div class="mt-4 d-flex flex-column gap-4">
   <% @most_booked_services.each do |stat| %>
     <%= render 'admin/services/service', service: stat[:service] do %>
-      <p class="mt-2">Count: <%= stat[:count] %></p>
+      <p class="mt-2">Booking count: <%= stat[:count] %></p>
     <% end %>
   <% end %>
 </div>

@@ -29,6 +29,9 @@ module Mutations
         bookings_to_save.each do |b|
           b.save!
         end
+        if receipt.bookings.empty?
+          raise GraphQL::ExecutionError, "No bookings saved"
+        end
         # empty cart
         user.create_cart!
       end

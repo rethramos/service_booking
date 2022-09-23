@@ -6,7 +6,10 @@ module Types
 
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
-
+    field :receipts, [Types::ReceiptType], null: false
+    def receipts
+      ::Receipt.all
+    end
     field :me, Types::User::UserResultType, null: false
     field :logout_user, Boolean, null: false
     field :service_search, Types::ServiceType.connection_type, null: false do

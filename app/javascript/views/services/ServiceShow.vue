@@ -455,7 +455,10 @@ export default {
               break;
           }
         }
-      );
+      ).catch((error) => {
+        this.showDefaultError(error)
+        console.error(error)
+      });
     },
     handleReceipt(newReceipt) {
       this.receiptId = newReceipt.id;
@@ -466,11 +469,11 @@ export default {
     handleUnauthenticated() {
       this.$router.push({ name: "login" });
     },
-    showDefaultError() {
+    showDefaultError(error = 'Something went wrong') {
       this.SET_TOAST({
         header: "Error",
         isVisible: true,
-        message: `Something went wrong.`,
+        message: error,
         type: "danger",
       });
     },

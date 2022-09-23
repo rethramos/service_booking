@@ -8,6 +8,7 @@ class Admin::StaticPagesController < Admin::AdminController
     @pending_bookings = Booking.where(booking_status: BookingStatus.pending).count
 
     @most_booked_services = Booking
+                            .joins(:service)
                             .select(:service_id)
                             .group(:service_id)
                             .order('count_service_id desc')

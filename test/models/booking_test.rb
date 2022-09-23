@@ -18,6 +18,11 @@ class BookingTest < ActiveSupport::TestCase
     assert @booking.valid?
   end
 
+  test 'should require service' do
+    @booking.service = nil
+    assert_not @booking.valid?
+  end
+
   test 'should require receipt' do
     @booking.receipt = nil
     assert_not @booking.valid?
