@@ -8,6 +8,7 @@
   <p><strong>Country:</strong> <%= @business.address.country %></p>
   <p><strong>Postal Code:</strong> <%= @business.address.postal_code %></p>
 <% end %>
+<p><strong>Timezone:</strong> <%= @business.timezone %></p>
 <h2>Categories (<%=  @service_categories.count %>)</h2>
 <%= link_to 'New Category', new_admin_business_service_category_path(@business) %>
 <ul class="mt-4 row row-cols-1 row-cols-md-2 row-cols-lg-4 g-2">
@@ -19,5 +20,5 @@
 </ul>
 <br>
 <h2>Services (<%= @services.count %>)</h2>
-<%= link_to 'New Service', new_admin_business_service_path(@business) %> |
+<%= link_to 'New Service', new_admin_business_service_path(@business) %>
 <%= render 'admin/services/service_list', services: @services %>
