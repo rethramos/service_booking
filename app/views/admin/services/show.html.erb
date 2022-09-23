@@ -1,7 +1,7 @@
 <h1><%= @service.name %></h1>
 <p>
   <%= link_to "Edit this service", edit_admin_business_service_path(@business, @service) %> |
-  <%= link_to "Back to services", admin_business_services_path(@business) %>
+  <%= link_to "Back to business", admin_business_path(@business) %>
 </p>
 <%= button_to "Delete service",
   admin_business_service_path(@business, @service),
