@@ -344,7 +344,6 @@ export default {
     ...mapMutations("toast", ["SET_TOAST"]),
     getCartItems() {
       me().then(({ data: { me } }) => {
-        console.log(me);
         switch (me.__typename) {
           case "User":
             this.cartItems = me.cart.cartItems;
@@ -376,7 +375,6 @@ export default {
     addServiceToCart() {
       addToCart({ ...this.cartItem, serviceId: this.service.id }).then(
         ({ data: { addToCart } }) => {
-          console.log(addToCart);
           switch (addToCart.__typename) {
             case "CartItem":
               this.errors = [];
@@ -402,7 +400,6 @@ export default {
     },
     submitCheckoutDetails() {
       createReceipt(this.receipt).then(({ data: { createReceipt } }) => {
-        console.log(createReceipt);
         switch (createReceipt.__typename) {
           case "Receipt":
             // transition to next step
@@ -425,7 +422,6 @@ export default {
     confirmBooking() {
       placeBookings({ receiptId: this.receiptId }).then(
         ({ data: { placeBookings } }) => {
-          console.log(placeBookings);
           switch (placeBookings.__typename) {
             case "Receipt":
               // redirect to success page with receipt information
