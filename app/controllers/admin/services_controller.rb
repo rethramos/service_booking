@@ -62,7 +62,7 @@ class Admin::ServicesController < Admin::AdminController
 
     respond_to do |format|
       flash[:success] = "Service was successfully destroyed."
-      format.html { redirect_to admin_business_services_url(@business) }
+      format.html { redirect_to admin_business_url(@business) }
       format.json { head :no_content }
     end
   end

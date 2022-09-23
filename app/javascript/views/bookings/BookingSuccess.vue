@@ -7,7 +7,12 @@
         <BaseCard class="card-body">
           <strong>{{ i.serviceName }} (x {{ i.slots }})</strong>
           <p>{{ new Date(i.serviceAppointment).toString() }}</p>
-          <p><strong>Store:</strong> {{ i.service.business.name }}</p>
+          <p><strong>Store: </strong>
+            <span v-if="i.service">
+              {{ i.service.business.name }}
+            </span>
+            <i v-else>Service information deleted</i>
+          </p>
           <p>
             <strong>Subtotal:</strong> {{ i.serviceCurrency }}
             {{ i.serviceUnitPrice * i.slots }}
