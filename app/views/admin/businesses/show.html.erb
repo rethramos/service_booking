@@ -1,4 +1,5 @@
 <h1><%= @business.name %></h1>
+<%= link_to 'Edit business', edit_admin_business_path(@business) %>
 <% if @business.address %>
   <h2>Address</h2>
   <p><strong>Line 1:</strong> <%= @business.address.line_one %></p>

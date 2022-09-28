@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     get 'login', to: 'sessions#new'
     post 'login', to: 'sessions#create'
     delete 'logout', to: 'sessions#destroy'
-    resources :businesses, only: %i[index show new create] do
+    resources :businesses, only: %i[index show new create edit update] do
       resources :services
       resources :service_categories, only: %i[new create]
     end

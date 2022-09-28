@@ -20,4 +20,14 @@ class Admin::BusinessesControllerTest < ActionDispatch::IntegrationTest
     get admin_businesses_path(businesses(:one))
     assert_redirected_to admin_login_url
   end
+
+  test "should redirect edit to admin login for guests" do
+    get edit_admin_business_path(businesses(:one))
+    assert_redirected_to admin_login_url
+  end
+
+  test "should redirect update to admin login for guests" do
+    patch admin_business_path(businesses(:one))
+    assert_redirected_to admin_login_url
+  end
 end
