@@ -22,6 +22,7 @@ module Types
     field :receipt, Types::ReceiptType do
       argument :id, ID, required: true
     end
+    field :countries, [Types::CountryType], null: false
 
     def me
       if context[:logged_in]
@@ -60,6 +61,12 @@ module Types
       ::Receipt.find(id)
     rescue ActiveRecord::RecordNotFound
       nil
+    end
+
+    def countries
+      CS.countries.map do |k,v|
+        { code: k, name: v }
+      end
     end
   end
 end
