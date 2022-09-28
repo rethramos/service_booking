@@ -26,6 +26,9 @@ class Admin::BusinessesController < Admin::AdminController
   
   def edit
     @business = Business.find params[:id]
+    if @business.address.nil?
+      @business.build_address
+    end
   end
   
   def update
@@ -39,6 +42,11 @@ class Admin::BusinessesController < Admin::AdminController
   end
 
   private
+
+  def country_name(country_code)
+    country = ISO3166::Country[country_code]
+    country.translations[I18n.locale.to_s] || country.common_name || country.iso_short_name
+  end
 
   def business_params
     params.require(:business).permit(

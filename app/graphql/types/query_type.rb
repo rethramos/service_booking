@@ -22,6 +22,14 @@ module Types
     field :receipt, Types::ReceiptType do
       argument :id, ID, required: true
     end
+    field :countries, [Types::CountryType], null: false
+    field :states, [Types::StateType], null: false do
+      argument :country_code, String, required: true
+    end
+    field :cities, [String], null: false do
+      argument :state_code, String, required: false
+      argument :country_code, String, required: true
+    end
 
     def me
       if context[:logged_in]
@@ -60,6 +68,27 @@ module Types
       ::Receipt.find(id)
     rescue ActiveRecord::RecordNotFound
       nil
+    end
+
+    def countries
+      CS.countries.map do |k,v|
+        { code: k, name: v }
+      end
+    end
+
+    def states(country_code:)
+      CS.states(country_code).map do |k, v|
+        { code: k, name: v }
+      end
+    end
+
+    def cities(state_code:, country_code:)
+      res = CS.cities(state_code, country_code)
+      if res.is_a? Array
+        res
+      else
+        []
+      end
     end
   end
 end

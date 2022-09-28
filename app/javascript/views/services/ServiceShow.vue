@@ -121,32 +121,39 @@
           v-model="receipt.address.lineTwo"
           required
         />
-
-        <BaseInput
-          label="City"
-          type="text"
-          name="receipt[address][city]"
-          id="receipt_address_city"
-          class="form-control"
-          v-model="receipt.address.city"
-          required
-        />
-        <BaseInput
-          label="Province"
-          type="text"
-          name="receipt[address][province]"
-          id="receipt_address_province"
-          class="form-control"
-          v-model="receipt.address.province"
-          required
-        />
-        <BaseInput
+        <BaseSelect
           label="Country"
-          type="text"
+          :options="countries"
+          :valueKey="'name'"
+          :labelKey="'name'"
           name="receipt[address][country]"
           id="receipt_address_country"
-          class="form-control"
+          class="form-select"
           v-model="receipt.address.country"
+          @update:modelValue="getStates"
+          required
+        />
+        <BaseSelect
+          label="State/Region/Province (select a country first)"
+          :options="states"
+          :valueKey="'name'"
+          :labelKey="'name'"
+          name="receipt[address][province]"
+          id="receipt_address_province"
+          class="form-select"
+          v-model="receipt.address.province"
+          @update:modelValue="getCities"
+          required
+        />
+        <BaseSelect
+          label="City (select a state/region/province first)"
+          :options="cities"
+          :valueKey="'name'"
+          :labelKey="'name'"
+          name="receipt[address][city]"
+          id="receipt_address_city"
+          class="form-select"
+          v-model="receipt.address.city"
           required
         />
         <BaseInput
@@ -243,7 +250,7 @@
           <strong>City: </strong> {{ receipt.address.city }} (ZIP:
           {{ receipt.address.postalCode }})
         </p>
-        <p><strong>Province: </strong> {{ receipt.address.province }}</p>
+        <p><strong>State/Region/Province: </strong> {{ receipt.address.province }}</p>
         <p><strong>Country:</strong> {{ receipt.address.country }}</p>
 
         <hr />
@@ -276,6 +283,9 @@ import addToCart from "../../graphql-requests/carts/add-to-cart";
 import paymentOptions from "../../graphql-requests/payment-options/payment-options";
 import createReceipt from "../../graphql-requests/receipts/create-receipt";
 import placeBookings from "../../graphql-requests/bookings/place-bookings";
+import countries from "../../graphql-requests/shared/countries";
+import states from "../../graphql-requests/shared/states";
+import cities from "../../graphql-requests/shared/cities";
 import me from "../../graphql-requests/user/me";
 import { mapMutations, mapState } from "vuex";
 import deleteCartItem from "../../graphql-requests/carts/delete-cart-item";
@@ -296,6 +306,9 @@ export default {
   },
   data() {
     return {
+      countries: [],
+      states: [],
+      cities: [],
       cartItem: {
         appointmentId: "",
         slots: 1,
@@ -325,6 +338,16 @@ export default {
   },
   computed: {
     ...mapState("auth", ["currentUser"]),
+    countryMap() {
+      const obj = {};
+      this.countries.forEach((c) => (obj[c.name] = c));
+      return obj;
+    },
+    stateMap() {
+      const obj = {};
+      this.states.forEach((s) => (obj[s.name] = s));
+      return obj;
+    },
     selectedAppointment() {
       return this.service.appointments.find(
         (s) => s.id == this.cartItem.appointmentId
@@ -490,8 +513,32 @@ export default {
         type: "danger",
       });
     },
+    getCountries() {
+      countries().then(({ data: { countries } }) => {
+        this.countries = countries;
+        this.receipt.address.province = "";
+        this.receipt.address.city = "";
+      });
+    },
+    getStates() {
+      states({
+        countryCode: this.countryMap[this.receipt.address.country].code,
+      }).then(({ data: { states } }) => {
+        this.states = states;
+        this.receipt.address.city = "";
+      });
+    },
+    getCities() {
+      cities({
+        stateCode: this.stateMap[this.receipt.address.province].code,
+        countryCode: this.countryMap[this.receipt.address.country].code,
+      }).then(({ data: { cities } }) => {
+        this.cities = cities.map((c) => ({ name: c }));
+      });
+    },
   },
   created() {
+    this.getCountries();
     this.getPaymentOptions();
     this.receipt = {
       ...this.receipt,
