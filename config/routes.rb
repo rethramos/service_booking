@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'locations/countries'
+  get 'locations/states'
+  get 'locations/cities'
   if Rails.env.development?
     mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
   end

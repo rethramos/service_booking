@@ -13,24 +13,24 @@
   <p class="h2">Address</p>
   <%= form.fields_for :address do |address_form| %>
     <div class="form-group">
-      <%= address_form.label :line_one %>
+      <%= address_form.label :line_one, 'Line 1' %>
       <%= address_form.text_field :line_one, class: 'form-control' %>
     </div>
     <div class="form-group">
-      <%= address_form.label :line_two %>
+      <%= address_form.label :line_two, 'Line 2' %>
       <%= address_form.text_field :line_two, class: 'form-control' %>
     </div>
     <div class="form-group">
       <%= address_form.label :country %>
-      <%= address_form.country_select :country, { format: :short_name }, class: 'form-select' %>
+      <%= address_form.country_select :country, {}, class: 'form-select' %>
     </div>
     <div class="form-group">
-      <%= address_form.label :province, 'Province/State' %>
-      <%= address_form.text_field :province, class: 'form-control' %>
+      <%= address_form.label :province, 'State/Region/Province' %>
+      <%= address_form.select :province, [], {}, class: 'form-select' %>
     </div>
     <div class="form-group">
       <%= address_form.label :city %>
-      <%= address_form.text_field :city, class: 'form-control' %>
+      <%= address_form.select :city, [], {}, class: 'form-select' %>
     </div>
     <div class="form-group">
       <%= address_form.label :postal_code %>
@@ -41,3 +41,26 @@
     <%= form.submit class: 'btn btn-primary' %>
   </div>
 <% end %>
+<script>
+  var countrySelect = document.getElementById('business_address_attributes_country')
+  var stateSelect = document.getElementById('business_address_attributes_province')
+  var citySelect = document.getElementById('business_address_attributes_city')
+  countrySelect.addEventListener('change', () => {
+    fetch(`/locations/states?country_code=${countrySelect.value}`).then((res)=>res.json()).then((states) => {
+      stateSelect.innerHTML = '<option value="" disabled>Select...</option>'
+      states.forEach(state => {
+      stateSelect.innerHTML += `<option value="${state.code}">${state.name}</option>`
+      })
+    })
+  })
+
+  stateSelect.addEventListener('change', () => {
+    fetch(`/locations/cities?country_code=${countrySelect.value}&state_code=${stateSelect.value}`)
+    .then((res)=>res.json()).then((cities) => {
+      citySelect.innerHTML = '<option value="" disabled>Select...</option>'
+      cities.forEach(city => {
+      citySelect.innerHTML += `<option value="${city.name}">${city.name}</option>`
+      })
+    })
+  })
+</script>
