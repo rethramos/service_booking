@@ -4,6 +4,7 @@ class Business < ApplicationRecord
   has_many :service_categories, dependent: :destroy
   has_many :services, dependent: :destroy
 
+  accepts_nested_attributes_for :address
   validates :name, presence: true, length: { maximum: 100 }
   validates :timezone, presence: true
   validate :timezone_exists
