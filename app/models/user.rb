@@ -3,6 +3,7 @@ class User < ApplicationRecord
 
   has_many :businesses, dependent: :destroy
   has_many :receipts, dependent: :destroy
+  has_many :bookings, through: :receipts
   has_one :cart, dependent: :destroy
 
   before_save :downcase_email

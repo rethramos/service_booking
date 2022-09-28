@@ -5,6 +5,7 @@ import LoginPage from "./views/LoginPage.vue";
 import NotFound from "./views/NotFound.vue";
 import ServiceShow from "./views/services/ServiceShow.vue";
 import BookingSuccess from "./views/bookings/BookingSuccess.vue";
+import BookingIndex from "./views/bookings/BookingIndex.vue";
 import nProgress from "nprogress";
 import store from "./store/store";
 import receipt from "./graphql-requests/receipts/receipt";
@@ -33,6 +34,11 @@ const router = createRouter({
           next({ name: "404" });
         }
       },
+    },
+    {
+      path: "/bookings",
+      name: "bookings-index",
+      component: BookingIndex,
     },
     {
       path: "/bookings/success",

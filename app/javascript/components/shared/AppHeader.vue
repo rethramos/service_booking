@@ -37,6 +37,11 @@
             </RouterLink>
           </li>
           <li v-if="isLoggedIn" class="nav-item">
+            <RouterLink :to="{ name: 'bookings-index' }" class="nav-link" id="bookings">
+              Bookings
+            </RouterLink>
+          </li>
+          <li v-if="isLoggedIn" class="nav-item">
             <form action="" @click.prevent="logOut" id="logout">
               <BaseButton type="submit" class="nav-link">Log out</BaseButton>
             </form>
