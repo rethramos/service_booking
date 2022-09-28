@@ -134,7 +134,7 @@
           required
         />
         <BaseSelect
-          label="State/Region/Province"
+          label="State/Region/Province (select a country first)"
           :options="states"
           :valueKey="'name'"
           :labelKey="'name'"
@@ -142,14 +142,17 @@
           id="receipt_address_province"
           class="form-select"
           v-model="receipt.address.province"
+          @update:modelValue="getCities"
           required
         />
-        <BaseInput
-          label="City"
-          type="text"
+        <BaseSelect
+          label="City (select a state/region/province first)"
+          :options="cities"
+          :valueKey="'name'"
+          :labelKey="'name'"
           name="receipt[address][city]"
           id="receipt_address_city"
-          class="form-control"
+          class="form-select"
           v-model="receipt.address.city"
           required
         />
@@ -247,7 +250,7 @@
           <strong>City: </strong> {{ receipt.address.city }} (ZIP:
           {{ receipt.address.postalCode }})
         </p>
-        <p><strong>Province: </strong> {{ receipt.address.province }}</p>
+        <p><strong>State/Region/Province: </strong> {{ receipt.address.province }}</p>
         <p><strong>Country:</strong> {{ receipt.address.country }}</p>
 
         <hr />
@@ -282,6 +285,7 @@ import createReceipt from "../../graphql-requests/receipts/create-receipt";
 import placeBookings from "../../graphql-requests/bookings/place-bookings";
 import countries from "../../graphql-requests/shared/countries";
 import states from "../../graphql-requests/shared/states";
+import cities from "../../graphql-requests/shared/cities";
 import me from "../../graphql-requests/user/me";
 import { mapMutations, mapState } from "vuex";
 import deleteCartItem from "../../graphql-requests/carts/delete-cart-item";
@@ -304,6 +308,7 @@ export default {
     return {
       countries: [],
       states: [],
+      cities: [],
       cartItem: {
         appointmentId: "",
         slots: 1,
@@ -336,6 +341,11 @@ export default {
     countryMap() {
       const obj = {};
       this.countries.forEach((c) => (obj[c.name] = c));
+      return obj;
+    },
+    stateMap() {
+      const obj = {};
+      this.states.forEach((s) => (obj[s.name] = s));
       return obj;
     },
     selectedAppointment() {
@@ -506,6 +516,8 @@ export default {
     getCountries() {
       countries().then(({ data: { countries } }) => {
         this.countries = countries;
+        this.receipt.address.province = "";
+        this.receipt.address.city = "";
       });
     },
     getStates() {
@@ -513,6 +525,15 @@ export default {
         countryCode: this.countryMap[this.receipt.address.country].code,
       }).then(({ data: { states } }) => {
         this.states = states;
+        this.receipt.address.city = "";
+      });
+    },
+    getCities() {
+      cities({
+        stateCode: this.stateMap[this.receipt.address.province].code,
+        countryCode: this.countryMap[this.receipt.address.country].code,
+      }).then(({ data: { cities } }) => {
+        this.cities = cities.map((c) => ({ name: c }));
       });
     },
   },

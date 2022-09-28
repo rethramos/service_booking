@@ -39,7 +39,7 @@
       <strong>City: </strong> {{ receipt.address.city }} (ZIP:
       {{ receipt.address.postalCode }})
     </p>
-    <p><strong>Province: </strong> {{ receipt.address.province }}</p>
+    <p><strong>State/Region/Province: </strong> {{ receipt.address.province }}</p>
     <p><strong>Country:</strong> {{ receipt.address.country }}</p>
 
     <hr />
