@@ -42,6 +42,11 @@
             </RouterLink>
           </li>
           <li v-if="isLoggedIn" class="nav-item">
+            <RouterLink :to="{ name: 'cart-index' }" class="nav-link" id="cart">
+              Cart
+            </RouterLink>
+          </li>
+          <li v-if="isLoggedIn" class="nav-item">
             <form action="" @click.prevent="logOut" id="logout">
               <BaseButton type="submit" class="nav-link">Log out</BaseButton>
             </form>
