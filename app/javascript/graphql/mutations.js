@@ -122,6 +122,12 @@ export const ADD_TO_CART = gql`
   }
 `;
 
+export const DELETE_CART_ITEM = gql`
+  mutation DeleteCartItem($input: DeleteCartItemInput!) {
+    deleteCartItem(input: $input)
+  }
+`;
+
 export const CREATE_RECEIPT = gql`
   mutation CreateReceipt($input: CreateReceiptInput!) {
     createReceipt(input: $input) {
