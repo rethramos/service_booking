@@ -13,11 +13,12 @@ module Mutations
       return false unless (user = context[:current_user])
 
       cart_item = user.cart.cart_items.find_by(id: cart_item_id)
-      unless cart_item.nil?
+      if cart_item.nil?
+        false
+      else
         cart_item.destroy
         true
       end
-      false
     end
   end
 end

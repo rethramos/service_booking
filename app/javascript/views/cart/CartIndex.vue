@@ -21,7 +21,7 @@
         </BaseCard>
       </li>
     </ul>
-    <EmptyContent v-else/>
+    <EmptyContent v-else :message="'Your cart is empty'" />
   </div>
 </template>
 <script>
@@ -36,7 +36,7 @@ export default {
   components: {
     BaseCard,
     BaseButton,
-    EmptyContent
+    EmptyContent,
   },
   data() {
     return {
@@ -46,9 +46,12 @@ export default {
   methods: {
     ...mapMutations("toast", ["SET_TOAST"]),
     removeFromCart(cartItemId) {
-      console.log(cartItemId);
       deleteCartItem({ cartItemId }).then(({ data: { deleteCartItem } }) => {
-        window.location.reload()
+        if (deleteCartItem) {
+          this.cartItems = this.cartItems.filter((i) => i.id != cartItemId);
+        } else {
+          this.showDefaultError("Failed to remove an item from the cart.");
+        }
       });
     },
     getCartItems() {
