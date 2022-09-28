@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Bookings</h1>
-    <table class="table">
+    <table class="table" v-if="bookings.length">
       <thead>
         <tr>
           <th>ID</th>
@@ -23,11 +23,13 @@
         </tr>
       </tbody>
     </table>
+    <EmptyContent v-else />
   </div>
 </template>
 <script>
 import { mapMutations } from "vuex";
 import me from "../../graphql-requests/user/me";
+import EmptyContent from "../../components/shared/EmptyContent.vue";
 
 export default {
   data() {
@@ -58,17 +60,16 @@ export default {
         case "User":
           this.bookings = me.bookings;
           break;
-
         case "Unauthenticated":
           this.handleUnauthenticated();
           break;
-
         default:
           this.showDefaultError();
           break;
       }
     });
   },
+  components: { EmptyContent },
 };
 </script>
 <style lang=""></style>
