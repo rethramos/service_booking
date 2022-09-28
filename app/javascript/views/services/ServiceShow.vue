@@ -121,18 +121,19 @@
           v-model="receipt.address.lineTwo"
           required
         />
-
-        <BaseInput
-          label="City"
-          type="text"
-          name="receipt[address][city]"
-          id="receipt_address_city"
-          class="form-control"
-          v-model="receipt.address.city"
-          required
+        <BaseSelect
+          label="Country"
+          :options="countries"
+          :valueKey="'name'"
+          :labelKey="'name'"
+          name="receipt[address][country]"
+          id="receipt_address_country"
+          class="form-select"
+          v-model="receipt.address.country"
+          @update:modelValue="getStates"
         />
         <BaseInput
-          label="Province"
+          label="State"
           type="text"
           name="receipt[address][province]"
           id="receipt_address_province"
@@ -141,12 +142,12 @@
           required
         />
         <BaseInput
-          label="Country"
+          label="City"
           type="text"
-          name="receipt[address][country]"
-          id="receipt_address_country"
+          name="receipt[address][city]"
+          id="receipt_address_city"
           class="form-control"
-          v-model="receipt.address.country"
+          v-model="receipt.address.city"
           required
         />
         <BaseInput
@@ -276,6 +277,7 @@ import addToCart from "../../graphql-requests/carts/add-to-cart";
 import paymentOptions from "../../graphql-requests/payment-options/payment-options";
 import createReceipt from "../../graphql-requests/receipts/create-receipt";
 import placeBookings from "../../graphql-requests/bookings/place-bookings";
+import countries from "../../graphql-requests/shared/countries";
 import me from "../../graphql-requests/user/me";
 import { mapMutations, mapState } from "vuex";
 import deleteCartItem from "../../graphql-requests/carts/delete-cart-item";
@@ -296,6 +298,7 @@ export default {
   },
   data() {
     return {
+      countries: [],
       cartItem: {
         appointmentId: "",
         slots: 1,
@@ -490,8 +493,17 @@ export default {
         type: "danger",
       });
     },
+    getCountries() {
+      countries().then(({data: {countries}}) => {
+        this.countries = countries
+      })
+    },
+    getStates() {
+      console.log(this.receipt.address.country)
+    }
   },
   created() {
+    this.getCountries();
     this.getPaymentOptions();
     this.receipt = {
       ...this.receipt,

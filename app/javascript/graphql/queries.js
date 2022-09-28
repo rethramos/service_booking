@@ -170,3 +170,27 @@ export const RECEIPT = gql`
     }
   }
 `;
+
+export const COUNTRIES = gql`
+  query Countries {
+    countries {
+      code
+      name
+    }
+  }
+`;
+
+export const STATES = gql`
+  query States($countryCode: String!) {
+    states(countryCode: $countryCode) {
+      code
+      name
+    }
+  }
+`;
+
+export const CITIES = gql`
+  query Cities($stateCode: String!, $countryCode: String!) {
+    cities(stateCode: $stateCode, countryCode: $countryCode)
+  }
+`;
