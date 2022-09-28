@@ -10,10 +10,12 @@ export default function deleteCartItem({ cartItemId }) {
       },
     },
     update: (cache, { data: { deleteCartItem } }) => {
-      cache.evict({
-        id: cache.identify({ __typename: "CartItem", id: cartItemId }),
-      });
-      cache.gc();
+      if (deleteCartItem) {
+        cache.evict({
+          id: cache.identify({ __typename: "CartItem", id: cartItemId }),
+        });
+        cache.gc();
+      }
     },
   });
 }

@@ -221,6 +221,9 @@
                 <strong>Add-on:</strong>
                 <p>{{ i.addon }}</p>
               </div>
+              <form @submit.prevent="removeFromCart(i.id)">
+                <BaseButton type="submit" class="btn-danger">Remove</BaseButton>
+              </form>
             </BaseCard>
           </li>
         </ul>
@@ -275,6 +278,7 @@ import createReceipt from "../../graphql-requests/receipts/create-receipt";
 import placeBookings from "../../graphql-requests/bookings/place-bookings";
 import me from "../../graphql-requests/user/me";
 import { mapMutations, mapState } from "vuex";
+import deleteCartItem from "../../graphql-requests/carts/delete-cart-item";
 
 export default {
   components: {
@@ -346,6 +350,15 @@ export default {
   },
   methods: {
     ...mapMutations("toast", ["SET_TOAST"]),
+    removeFromCart(cartItemId) {
+      deleteCartItem({ cartItemId }).then(({ data: { deleteCartItem } }) => {
+        if (deleteCartItem) {
+          this.cartItems = this.cartItems.filter((i) => i.id != cartItemId);
+        } else {
+          this.showDefaultError("Failed to remove an item from the cart.");
+        }
+      });
+    },
     getCartItems() {
       me().then(({ data: { me } }) => {
         switch (me.__typename) {
