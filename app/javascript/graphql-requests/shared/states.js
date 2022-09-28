@@ -7,5 +7,6 @@ export default function states({ countryCode }) {
     variables: {
       countryCode,
     },
+    fetchPolicy: "no-cache"
   });
 }

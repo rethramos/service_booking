@@ -8,5 +8,6 @@ export default function cities({ stateCode, countryCode }) {
       stateCode,
       countryCode,
     },
+    fetchPolicy: "no-cache",
   });
 }
