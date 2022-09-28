@@ -25,6 +25,19 @@ export default function placeBookings({ receiptId }) {
           },
         },
       });
+
+      // update user's list of bookings
+      cache.modify({
+        id: userCacheId,
+        fields: {
+          bookings(existingBookings = [], { readField, toReference }) {
+            const newBookings = placeBookings.bookings.map((b) =>
+              toReference(b)
+            );
+            return [...existingBookings, ...newBookings];
+          },
+        },
+      });
     },
   });
 }
