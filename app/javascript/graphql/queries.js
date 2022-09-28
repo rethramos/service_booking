@@ -14,6 +14,17 @@ export const ME = gql`
         lastName
         admin
         timezone
+        bookings {
+          id
+          createdAt
+          serviceName
+          serviceAppointment
+          slots
+          bookingStatus {
+            id
+            name
+          }
+        }
         cart {
           id
           cartItems {

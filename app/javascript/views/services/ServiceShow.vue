@@ -84,7 +84,7 @@
           required
         />
         <BaseInput
-          label="Contact Number"
+          label="Contact Number (Format: +[Country Code][Phone Number])"
           type="tel"
           name="receipt[contact_number]"
           id="receipt_contact_number"
@@ -424,8 +424,8 @@ export default {
       });
     },
     confirmBooking() {
-      placeBookings({ receiptId: this.receiptId }).then(
-        ({ data: { placeBookings } }) => {
+      placeBookings({ receiptId: this.receiptId })
+        .then(({ data: { placeBookings } }) => {
           switch (placeBookings.__typename) {
             case "Receipt":
               // redirect to success page with receipt information
@@ -454,11 +454,11 @@ export default {
               this.showDefaultError();
               break;
           }
-        }
-      ).catch((error) => {
-        this.showDefaultError(error)
-        console.error(error)
-      });
+        })
+        .catch((error) => {
+          this.showDefaultError(error);
+          console.error(error);
+        });
     },
     handleReceipt(newReceipt) {
       this.receiptId = newReceipt.id;
@@ -469,7 +469,7 @@ export default {
     handleUnauthenticated() {
       this.$router.push({ name: "login" });
     },
-    showDefaultError(error = 'Something went wrong') {
+    showDefaultError(error = "Something went wrong") {
       this.SET_TOAST({
         header: "Error",
         isVisible: true,
@@ -480,6 +480,12 @@ export default {
   },
   created() {
     this.getPaymentOptions();
+    this.receipt = {
+      ...this.receipt,
+      firstName: this.currentUser.firstName,
+      lastName: this.currentUser.lastName,
+      email: this.currentUser.email,
+    };
   },
 };
 </script>
