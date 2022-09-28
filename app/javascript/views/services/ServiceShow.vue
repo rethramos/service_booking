@@ -131,13 +131,16 @@
           class="form-select"
           v-model="receipt.address.country"
           @update:modelValue="getStates"
+          required
         />
-        <BaseInput
-          label="State"
-          type="text"
+        <BaseSelect
+          label="State/Region/Province"
+          :options="states"
+          :valueKey="'name'"
+          :labelKey="'name'"
           name="receipt[address][province]"
           id="receipt_address_province"
-          class="form-control"
+          class="form-select"
           v-model="receipt.address.province"
           required
         />
@@ -278,6 +281,7 @@ import paymentOptions from "../../graphql-requests/payment-options/payment-optio
 import createReceipt from "../../graphql-requests/receipts/create-receipt";
 import placeBookings from "../../graphql-requests/bookings/place-bookings";
 import countries from "../../graphql-requests/shared/countries";
+import states from "../../graphql-requests/shared/states";
 import me from "../../graphql-requests/user/me";
 import { mapMutations, mapState } from "vuex";
 import deleteCartItem from "../../graphql-requests/carts/delete-cart-item";
@@ -299,6 +303,7 @@ export default {
   data() {
     return {
       countries: [],
+      states: [],
       cartItem: {
         appointmentId: "",
         slots: 1,
@@ -328,6 +333,11 @@ export default {
   },
   computed: {
     ...mapState("auth", ["currentUser"]),
+    countryMap() {
+      const obj = {};
+      this.countries.forEach((c) => (obj[c.name] = c));
+      return obj;
+    },
     selectedAppointment() {
       return this.service.appointments.find(
         (s) => s.id == this.cartItem.appointmentId
@@ -494,13 +504,17 @@ export default {
       });
     },
     getCountries() {
-      countries().then(({data: {countries}}) => {
-        this.countries = countries
-      })
+      countries().then(({ data: { countries } }) => {
+        this.countries = countries;
+      });
     },
     getStates() {
-      console.log(this.receipt.address.country)
-    }
+      states({
+        countryCode: this.countryMap[this.receipt.address.country].code,
+      }).then(({ data: { states } }) => {
+        this.states = states;
+      });
+    },
   },
   created() {
     this.getCountries();
