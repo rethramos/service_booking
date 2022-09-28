@@ -1,5 +1,6 @@
 module Types
   class MutationType < Types::BaseObject
+    field :delete_cart_item, mutation: Mutations::DeleteCartItem
     field :place_bookings, mutation: Mutations::PlaceBookings
     field :create_receipt, mutation: Mutations::CreateReceipt
     field :add_to_cart, mutation: Mutations::AddToCart

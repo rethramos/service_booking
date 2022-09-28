@@ -6,6 +6,7 @@ import NotFound from "./views/NotFound.vue";
 import ServiceShow from "./views/services/ServiceShow.vue";
 import BookingSuccess from "./views/bookings/BookingSuccess.vue";
 import BookingIndex from "./views/bookings/BookingIndex.vue";
+import CartIndex from "./views/cart/CartIndex.vue";
 import nProgress from "nprogress";
 import store from "./store/store";
 import receipt from "./graphql-requests/receipts/receipt";
@@ -16,6 +17,7 @@ const router = createRouter({
     { path: "/", name: "home", component: HomePage },
     { path: "/register", name: "register", component: RegisterPage },
     { path: "/login", name: "login", component: LoginPage },
+    { path: '/cart', name: 'cart-index', component: CartIndex },
     {
       path: "/services/:id",
       name: "services-show",
